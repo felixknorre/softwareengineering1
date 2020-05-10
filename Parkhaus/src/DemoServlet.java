@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,13 +19,15 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Parkhaus")
 public class DemoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public DemoServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
@@ -33,10 +36,16 @@ public class DemoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//split several parameters
 		String[] requestParam = request.getQueryString().split("&");
+		
 		//split first param
 		String[] cmd = requestParam[0].split("=");
-		//split second param into key and value
-		String[] name = requestParam[1].split("=");
+		
+		//if there is a second param, split into key and value
+		String[] name = new String[2];
+		if(requestParam.length > 1) {
+			
+			name = requestParam[1].split("=");
+		}
 		
 		//check wich Parkhaus is selected
 		if("name".equals(name[0]) && "P1".equals(name[1])) {
@@ -70,6 +79,14 @@ public class DemoServlet extends HttpServlet {
 				out.println(""); 
 			}
 		}
+		
+		if("sum".equals(cmd[1])) {
+			// return sum of turnover
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			
+			out.println("sum = " + getPersistentSum() / 100); // divide by 100 cent to euro
+		}
 	}
 
 	/**
@@ -78,6 +95,50 @@ public class DemoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String body = getBody(request);
 		System.out.println(body);
+		
+		String[] requestParam = body.split(",");
+		
+		if("enter".equals(requestParam[0])) {
+			System.out.println("enter");
+			
+			//TODO add car to parkhaus
+			
+
+		}
+		
+		// car leaves parkhaus
+		if("leave".equals(requestParam[0])) {
+			System.out.println("leave");
+			
+			//TODO remove car from parkhaus
+			
+			// set sum
+			Float sum = getPersistentSum();
+			Float price =  Float.parseFloat(requestParam[4]);
+			sum += price;
+			getApplication().setAttribute("sum", sum);
+		}
+		
+		
+		
+	}
+	
+	private ServletContext getApplication() {
+		return getServletConfig().getServletContext();
+	}
+	
+	
+	private Float getPersistentSum() {
+		Float sum;
+		
+		ServletContext application = getApplication();
+		sum = (Float)(application.getAttribute("sum"));
+		
+		if(sum == null) {
+			sum = 0.0f;
+		} 
+		
+		return sum;
 		
 	}
 	
