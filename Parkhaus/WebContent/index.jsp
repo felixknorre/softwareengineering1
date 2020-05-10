@@ -10,6 +10,7 @@
 <body>
 	<h1>Parkhaus</h1>
 	<ccm-parkhaus-7-0-0
+		name="P1"
 		server_url="http://localhost:8080/Parkhaus/Parkhaus"
 	></ccm-parkhaus-7-0-0>
 </body>
