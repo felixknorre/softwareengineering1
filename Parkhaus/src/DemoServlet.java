@@ -61,7 +61,7 @@ public class DemoServlet extends HttpServlet {
 	
 				//set config
 				// MAX, Opening, Closing, traffic light delay, price 
-				out.println("10,5,22,100,10"); 
+				out.println("10,0,24,100,10"); 
 			}
 			
 			//check for cars req
@@ -74,11 +74,16 @@ public class DemoServlet extends HttpServlet {
 				//demo data
 				// Nr/Timer/Duration/Price/Hash/Color
 				// 5/1589113932906/_/_/178b6b9e445210a90fa2e95ef5307ccb/#a762f0/4
+				
 
+				
+				Parkhaus ph = getPersistentParkhaus();
+				String cars = ph.toString();
 				
 				//car attr separated with /
 				// cars separated with ,
-				out.println(""); 
+				System.out.println(cars);
+				out.println(cars); 
 			}
 		}
 		
@@ -142,18 +147,19 @@ public class DemoServlet extends HttpServlet {
 		String[] requestParam = body.split(",");
 		
 		if("enter".equals(requestParam[0])) {
-			//System.out.println("enter");
-			
-			//TODO add car to parkhaus
-			
-
+			Auto tmpAuto = new Auto(Integer.parseInt(requestParam[1]) , Long.parseLong(requestParam[2]), requestParam[5], requestParam[6], Integer.parseInt(requestParam[7]));
+			Parkhaus ph = getPersistentParkhaus();
+			ph.addAuto(tmpAuto);
+			getApplication().setAttribute("parkhaus", ph);
 		}
 		
 		// car leaves parkhaus
 		if("leave".equals(requestParam[0])) {
 			//System.out.println("leave");
+			Parkhaus ph = getPersistentParkhaus();
+			ph.removeAuto(Integer.parseInt(requestParam[7]));
+			getApplication().setAttribute("parkhaus", ph);
 			
-			//TODO remove car from parkhaus
 			
 			// set sum, duratioin and count
 			Float sum = getPersistentSum();
@@ -260,6 +266,19 @@ public class DemoServlet extends HttpServlet {
 		} 
 		
 		return max;
+	}
+	
+	private Parkhaus getPersistentParkhaus() {
+		Parkhaus ph;
+			
+		ServletContext application = getApplication();
+		ph = (Parkhaus)(application.getAttribute("parkhaus"));
+		
+		if(ph == null) {
+			ph = new Parkhaus(10);
+		}
+		
+		return ph;
 	}
 	
 	private static String getBody(HttpServletRequest request) throws IOException{
