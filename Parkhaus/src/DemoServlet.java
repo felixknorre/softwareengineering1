@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -85,7 +87,48 @@ public class DemoServlet extends HttpServlet {
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
 			
-			out.println("sum = " + getPersistentSum() / 100); // divide by 100 cent to euro
+			out.println("sum = " + getPersistentSum() / 100 ); // divide by 100 cent to euro
+		}
+		
+		if("avg".equals(cmd[1])) {
+			
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			
+			Float sum = getPersistentSum();
+			Float duration = getPersistentDuration();
+			Float count = getPersistentCount();
+			
+			
+			if(count == 0) {
+				out.println("avgSum = 0.0, avgDuration = 0");
+			} else {
+				Float avgSum = sum / count / 100;
+				long avgDuration = (long)(duration / count);
+				
+				//format
+				String formatSumString = String.format("%.02f", avgSum);
+				
+				// the format of your date
+				SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm:ss"); 
+				Date date = new Date(avgDuration * 1000L);  
+				String formattedDate = sdf.format(date);
+				System.out.println(formattedDate);
+				
+				out.println("avgSum = " + formatSumString + ", avgDuration = " + avgDuration);
+			}
+			
+			
+		}
+		
+		if("Min/MaxPrice".equals(cmd[1])) {
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			
+			Float minPrice = getPersistentMinPrice();
+			Float maxPrice = getPersistentMaxPrice();
+			
+			out.println("min =" + minPrice / 100 + ", max = " + maxPrice / 100); 
 		}
 	}
 
@@ -99,7 +142,7 @@ public class DemoServlet extends HttpServlet {
 		String[] requestParam = body.split(",");
 		
 		if("enter".equals(requestParam[0])) {
-			System.out.println("enter");
+			//System.out.println("enter");
 			
 			//TODO add car to parkhaus
 			
@@ -108,15 +151,40 @@ public class DemoServlet extends HttpServlet {
 		
 		// car leaves parkhaus
 		if("leave".equals(requestParam[0])) {
-			System.out.println("leave");
+			//System.out.println("leave");
 			
 			//TODO remove car from parkhaus
 			
-			// set sum
+			// set sum, duratioin and count
 			Float sum = getPersistentSum();
+			Float duration = getPersistentDuration();
+			Float count = getPersistentCount();
+			Float minPrice = getPersistentMinPrice();
+			Float maxPrice = getPersistentMaxPrice();
+					
 			Float price =  Float.parseFloat(requestParam[4]);
+			Float newDuration = Float.parseFloat(requestParam[3]);
+			
+			if(price > maxPrice) {
+				maxPrice = price;
+			}
+			if(minPrice == 0.0) {
+				minPrice = price;
+			} else {
+				if(price < minPrice) {
+					minPrice = price;
+				}
+			}
+			
 			sum += price;
+			duration += newDuration;
+			count += 1;
+					
 			getApplication().setAttribute("sum", sum);
+			getApplication().setAttribute("duration", duration);
+			getApplication().setAttribute("count", count);
+			getApplication().setAttribute("minPrice", minPrice);
+			getApplication().setAttribute("maxPrice", maxPrice);
 		}
 		
 		
@@ -140,6 +208,58 @@ public class DemoServlet extends HttpServlet {
 		
 		return sum;
 		
+	}
+	
+	private Float getPersistentDuration() {
+		Float duration;
+		
+		ServletContext application = getApplication();
+		duration = (Float)(application.getAttribute("duration"));
+		
+		if(duration == null) {
+			duration = 0.0f;
+		} 
+		
+		return duration;
+	}
+	
+	private Float getPersistentCount() {
+		Float count;
+		
+		ServletContext application = getApplication();
+		count = (Float)(application.getAttribute("count"));
+		
+		if(count == null) {
+			count = 0.0f;
+		} 
+		
+		return count;
+	}
+	
+	private Float getPersistentMinPrice() {
+		Float min;
+		
+		ServletContext application = getApplication();
+		min = (Float)(application.getAttribute("minPrice"));
+		
+		if(min == null) {
+			min = 0.0f;
+		} 
+		
+		return min;
+	}
+	
+	private Float getPersistentMaxPrice() {
+		Float max;
+		
+		ServletContext application = getApplication();
+		max = (Float)(application.getAttribute("maxPrice"));
+		
+		if(max == null) {
+			max = 0.0f;
+		} 
+		
+		return max;
 	}
 	
 	private static String getBody(HttpServletRequest request) throws IOException{
