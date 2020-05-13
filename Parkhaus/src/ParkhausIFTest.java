@@ -7,55 +7,55 @@ import org.junit.jupiter.api.Test;
 class ParkhausIFTest {
 	
 	ParkhausIF ph;
-	Auto a1, a2, a3, a4;
+	
+	Auto a1, a2;
 	
 	@BeforeEach
 	void setUp() {
-		ph = new Parkhaus(10);
-		a1 = new Auto(1, 1223234234L, "IchbineinHash", "#fcb956", 3);
-		a2 = new Auto(2, 1223234234L, "IchbineinHash", "#fcb956", 2);
-		a3 = new Auto(3, 1223234234L, "IchbineinHash", "#fcb956", 5);
-		a4 = new Auto(4, 1223234234L, "IchbineinHash", "#fcb956", 8);
+		ph = new Parkhaus();
+		
+		a1 = new Auto(1, 123456L, "Hajsjdhdgf", "#4287f5");
+		a2 = new Auto(2, 32456788, "lldkdtHHGfd", "#e0f542");
 	}
-	
 
 	@Test
+	@DisplayName("Auto ins Parkhaus hinzufügen")
 	void testAddAuto() {
+		assertEquals(0, ph.checkBelegung());
 		ph.addAuto(a1);
-		Auto[] autos = ph.getParkhaus();
-		assertSame(a1, autos[a1.parkinglot - 1]);
+		assertEquals(1, ph.checkBelegung());
+		assertEquals("1/123456/_/_/Hajsjdhdgf/#4287f5", ph.toString());
+		
 	}
 
 	@Test
+	@DisplayName("Entferne Auto aus dem Parkhaus")
 	void testRemoveAuto() {
+		ph.addAuto(a1);
 		ph.addAuto(a2);
-		Auto[] autos = ph.getParkhaus();
-		assertSame(a2, autos[a2.parkinglot - 1]);
-		ph.removeAuto(2);
-		assertNull(autos[a2.parkinglot - 1]);
+		assertEquals("1/123456/_/_/Hajsjdhdgf/#4287f5,2/32456788/_/_/lldkdtHHGfd/#e0f542", ph.toString());
+		ph.removeAuto(a1);
+		assertEquals("2/32456788/_/_/lldkdtHHGfd/#e0f542", ph.toString());
 	}
 
 	@Test
-	@DisplayName("Überprüfe die Parkhausbelegung")
+	@DisplayName("Gibt die Anzahl der Autos im Parkhaus zurück")
 	void testCheckBelegung() {
 		assertEquals(0, ph.checkBelegung());
 		ph.addAuto(a1);
 		assertEquals(1, ph.checkBelegung());
 		ph.addAuto(a2);
-		ph.addAuto(a3);
-		ph.addAuto(a4);
-		assertEquals(4, ph.checkBelegung());
+		assertEquals(2, ph.checkBelegung());
 	}
-	
-	@Test
-	@DisplayName("Printe gesamtes Parkhaus")
-	void testToString_print_parkhaus() {
-		ph.addAuto(a1);
-		ph.addAuto(a2);
-		//1, 1223234234L, "IchbineinHash", "#fcb956", 3
-		//2, 1223234234L, "IchbineinHash", "#fcb956", 2
-		assertEquals("2/1223234234/_/_/IchbineinHash/#fcb956/2,1/1223234234/_/_/IchbineinHash/#fcb956/3", ph.toString());
 
+
+	@Test
+	void testToString() {
+		assertEquals("", ph.toString());
+		ph.addAuto(a1);
+		assertEquals("1/123456/_/_/Hajsjdhdgf/#4287f5", ph.toString());
+		ph.addAuto(a2);
+		assertEquals("1/123456/_/_/Hajsjdhdgf/#4287f5,2/32456788/_/_/lldkdtHHGfd/#e0f542", ph.toString());
 	}
 
 }

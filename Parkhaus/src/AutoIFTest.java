@@ -10,12 +10,12 @@ class AutoIFTest {
 	
 	@BeforeEach
 	void setUp() {
-		auto = new Auto(1, 1223234234L, "IchbineinHash", "#h3hdhu", 2);
+		auto = new Auto(1, 1223234234L, "IchbineinHash", "#h3hdhu");
 	}
 
 	@Test
-	@DisplayName("Print car attr")
+	@DisplayName("toString Methode fuer um das Auto auszugeben")
 	void testToString_print_attr() {
-		assertEquals("1/1223234234/_/_/IchbineinHash/#h3hdhu/2", auto.toString());
+		assertEquals("1/1223234234/_/_/IchbineinHash/#h3hdhu", auto.toString());
 	}
 }

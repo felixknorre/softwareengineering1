@@ -61,7 +61,7 @@ public class DemoServlet extends HttpServlet {
 	
 				//set config
 				// MAX, Opening, Closing, traffic light delay, price 
-				out.println("10,0,24,100,10"); 
+				out.println("10,5,24,100,10"); 
 			}
 			
 			//check for cars req
@@ -106,7 +106,7 @@ public class DemoServlet extends HttpServlet {
 			
 			
 			if(count == 0) {
-				out.println("avgSum = 0.0, avgDuration = 0");
+				out.println("avgSum = 0.0, avgDuration = Stunden: 0, Minuten: 0, Sekunden: 0");
 			} else {
 				Float avgSum = sum / count / 100;
 				long avgDuration = (long)(duration / count);
@@ -114,13 +114,18 @@ public class DemoServlet extends HttpServlet {
 				//format
 				String formatSumString = String.format("%.02f", avgSum);
 				
-				// the format of your date
-				SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm:ss"); 
-				Date date = new Date(avgDuration * 1000L);  
-				String formattedDate = sdf.format(date);
-				System.out.println(formattedDate);
 				
-				out.println("avgSum = " + formatSumString + ", avgDuration = " + avgDuration);
+				//format Millisec into hours, minutes, seconds
+				long seconds = avgDuration / 1000; //milli sec to sec
+				int hours = (int)seconds / 3600;
+				seconds = (int)seconds % 3600;
+				
+				int minutes = (int)seconds / 60;
+				seconds = seconds % 60;
+				
+				String avgDurationTime = "Stunden: " + hours + ", Minuten: " + minutes + ", Sekunden: " + seconds;
+				
+				out.println("avgSum = " + formatSumString + ", avgDuration = " + avgDurationTime);
 			}
 			
 			
@@ -147,17 +152,19 @@ public class DemoServlet extends HttpServlet {
 		String[] requestParam = body.split(",");
 		
 		if("enter".equals(requestParam[0])) {
-			Auto tmpAuto = new Auto(Integer.parseInt(requestParam[1]) , Long.parseLong(requestParam[2]), requestParam[5], requestParam[6], Integer.parseInt(requestParam[7]));
+			Auto newAuto = new Auto(Integer.parseInt(requestParam[1]) , Long.parseLong(requestParam[2]), requestParam[5], requestParam[6]);
 			Parkhaus ph = getPersistentParkhaus();
-			ph.addAuto(tmpAuto);
+			ph.addAuto(newAuto);
 			getApplication().setAttribute("parkhaus", ph);
+			System.out.println("Auto entered");
 		}
 		
 		// car leaves parkhaus
 		if("leave".equals(requestParam[0])) {
 			//System.out.println("leave");
+			Auto altesAuto = new Auto(Integer.parseInt(requestParam[1]) , Long.parseLong(requestParam[2]), requestParam[5], requestParam[6]);
 			Parkhaus ph = getPersistentParkhaus();
-			ph.removeAuto(Integer.parseInt(requestParam[7]));
+			ph.removeAuto(altesAuto);
 			getApplication().setAttribute("parkhaus", ph);
 			
 			
@@ -275,7 +282,7 @@ public class DemoServlet extends HttpServlet {
 		ph = (Parkhaus)(application.getAttribute("parkhaus"));
 		
 		if(ph == null) {
-			ph = new Parkhaus(10);
+			ph = new Parkhaus();
 		}
 		
 		return ph;

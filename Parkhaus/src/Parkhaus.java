@@ -1,51 +1,51 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Parkhaus implements ParkhausIF{
 	
-	Auto[] parkplatz;
-	int i;
+	List<Auto> parkplatz;
 	
-	public Parkhaus(int i) {
-		this.parkplatz = new Auto[i];
-		this.i = 0;
+	public Parkhaus() {
+		parkplatz = new ArrayList<Auto>();
 	}
 
 	@Override
-	public void addAuto(Auto a) {
-			if(i < parkplatz.length) {
-				parkplatz[a.parkinglot - 1] = a;
-				i++;
+	public void addAuto(Auto newCar) {
+		this.parkplatz.add(newCar);
+
+	}
+
+	@Override
+	public void removeAuto(Auto car) {
+		String hash = car.hash;
+		for( int i = 0; i < this.parkplatz.size(); i++) {
+			String currHash = this.parkplatz.get(i).hash;
+			if(currHash.equals(hash)) {
+				this.parkplatz.remove(i);
 			}
-	}
-
-	@Override
-	public void removeAuto(int i) {
-		if(i < parkplatz.length) {
-			parkplatz[i - 1] = null;
-			i--;
 		}
 	}
 
 	@Override
 	public int checkBelegung() {
 		// TODO Auto-generated method stub
-		return this.i;
+		return this.parkplatz.size();
 	}
 
 	@Override
-	public Auto[] getParkhaus() {
+	public List<Auto> getParkhaus() {
 		// TODO Auto-generated method stub
 		return this.parkplatz;
 	}
 	
 	public String toString() {
 		String str = "";
-		for(int i = 0; i < parkplatz.length; i++) {
-			if(parkplatz[i] != null) {
-				if(str.length() == 0) {
-					str += parkplatz[i].toString();
-				} else {
-					str +=  "," + parkplatz[i].toString() ;
-				}
+		
+		for(int i = 0; i < this.parkplatz.size(); i++) {
+			if(i == 0) {
+				str += this.parkplatz.get(i).toString();
+			} else {
+				str += "," + this.parkplatz.get(i).toString();
 			}
 		}
 		

@@ -1,9 +1,9 @@
-
+import java.util.List;
 
 public interface ParkhausIF {
-	public void addAuto(Auto a);
-	public void removeAuto(int i);
+	public void addAuto(Auto newCar);
+	public void removeAuto(Auto car);
 	public int checkBelegung();
-	public Auto[] getParkhaus();
+	public List<Auto> getParkhaus();
 	public String toString();
 }
