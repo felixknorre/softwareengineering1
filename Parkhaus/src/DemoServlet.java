@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -61,7 +62,7 @@ public class DemoServlet extends HttpServlet {
 	
 				//set config
 				// MAX, Opening, Closing, traffic light delay, price 
-				out.println("10,5,24,100,10"); 
+				out.println("10,0,24,100,10"); 
 			}
 			
 			//check for cars req
@@ -131,6 +132,50 @@ public class DemoServlet extends HttpServlet {
 			
 		}
 		
+		if("chart".equals(cmd[1])) {
+			System.out.println("chart");	
+			response.setContentType("text/plain"); 
+			PrintWriter out = response.getWriter();
+			
+			Parkhaus ph = getPersistentParkhaus();
+			List<Auto> hist = ph.history;
+			int size = hist.size();
+			
+			String preString = "{\n" + " \"data\": [\n" + " {\n" + " \"x\": [\n";
+			String xValueString = "";
+			String inString = "],\n" + " \"y\": [\n";
+			String yValueString = "";
+			String postString = " ],\n" + " \"type\": \"bar\"\n" + " }\n" + " ]\n" + "}";
+			
+			// create x value string
+			for(int i = 0; i < size; i++) {
+				if(i == (size - 1)) {
+					xValueString += "\"Car_" + nrToArray(hist)[i] + "\"\n";
+					yValueString += durationToArray(hist)[i] + "\n";
+				} else {
+					xValueString += "\"Car_" + nrToArray(hist)[i] + "\"" + ",\n";
+					yValueString += durationToArray(hist)[i] + ",\n";
+				}
+				
+			}
+			
+			out.println(preString + xValueString + inString + yValueString + postString);
+			//System.out.println(preString + xValueString + inString + yValueString + postString);
+		}
+		
+		if("familyChart".equals(cmd[1])) {
+			System.out.println("famliyChart");	
+			
+			response.setContentType("text/plain"); 
+			
+			Parkhaus ph = getPersistentParkhaus();
+			List<Auto> hist = ph.history;
+			
+			PrintWriter out = response.getWriter();
+			out.println("{\n" + " \"data\": [\n" + " {\n" + " \"labels\": [\n" + " \"any\",\n" + " \"Familie\",\n" + " \"Frau\"\n" + " ],\n" + " \"values\": [\n" + categoryToArray(hist)[0] +",\n" + categoryToArray(hist)[1] + ",\n" + categoryToArray(hist)[2] +"\n" + " ],\n" + " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
+			//System.out.println("{\n" + " \"data\": [\n" + " {\n" + " \"labels\": [\n" + " \"any\",\n" + " \"Familie\",\n" + " \"Frau\"\n" + " ],\n" + " \"values\": [\n" + categoryToArray(hist)[0] +",\n" + categoryToArray(hist)[1] + ",\n" + categoryToArray(hist)[2] +"\n" + " ],\n" + " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
+		}
+		
 		if("Min/MaxPrice".equals(cmd[1])) {
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
@@ -140,6 +185,7 @@ public class DemoServlet extends HttpServlet {
 			
 			out.println("min =" + minPrice / 100 + ", max = " + maxPrice / 100); 
 		}
+		
 	}
 
 	/**
@@ -152,19 +198,25 @@ public class DemoServlet extends HttpServlet {
 		String[] requestParam = body.split(",");
 		
 		if("enter".equals(requestParam[0])) {
-			Auto newAuto = new Auto(Integer.parseInt(requestParam[1]) , Long.parseLong(requestParam[2]), requestParam[5], requestParam[6]);
+			Auto newAuto = new Auto(Integer.parseInt(requestParam[1]) , Long.parseLong(requestParam[2]), requestParam[5], requestParam[6], requestParam[8], requestParam[7]);
 			Parkhaus ph = getPersistentParkhaus();
 			ph.addAuto(newAuto);
 			getApplication().setAttribute("parkhaus", ph);
+			//System.out.println(ph.toStringHistory());
 			System.out.println("Auto entered");
 		}
 		
 		// car leaves parkhaus
 		if("leave".equals(requestParam[0])) {
 			//System.out.println("leave");
-			Auto altesAuto = new Auto(Integer.parseInt(requestParam[1]) , Long.parseLong(requestParam[2]), requestParam[5], requestParam[6]);
+			Auto altesAuto = new Auto(Integer.parseInt(requestParam[1]) , Long.parseLong(requestParam[2]), requestParam[5], requestParam[6], requestParam[8], requestParam[7]);
 			Parkhaus ph = getPersistentParkhaus();
-			ph.removeAuto(altesAuto);
+			//System.out.println("Altes Auto: "+ altesAuto.toString());
+			//System.out.println(ph.toStringHistory());
+			ph.removeAuto(altesAuto, requestParam[3], requestParam[4]);
+			//System.out.println("history: " + ph.toStringHistory());
+			//System.out.println("parkhaus: " + ph.toString());
+			
 			getApplication().setAttribute("parkhaus", ph);
 			
 			
@@ -286,6 +338,59 @@ public class DemoServlet extends HttpServlet {
 		}
 		
 		return ph;
+	}
+	
+	private List<Auto> cars(){
+		List<Auto> hist;
+		Parkhaus ph;
+		
+		ServletContext application = getApplication();
+		ph = (Parkhaus)(application.getAttribute("parkhaus"));
+		hist = ph.history;
+		
+		return hist;
+	}
+	
+	public String[] nrToArray(List<Auto> hist) {
+		int size = hist.size();
+		String nrArray[] = new String[size];
+		for(int i = 0; i < size; i++) {
+			nrArray[i] = Integer.toString(hist.get(i).nr);
+		}
+		return nrArray;
+	}
+	
+	public String[] durationToArray(List<Auto> hist) {
+		int size = hist.size();
+		String durationArray[] = new String[size];
+		for(int i = 0; i < size; i++) {
+			if("_".equals(hist.get(i).duration)) {
+				durationArray[i] = "0";
+			} else {
+				durationArray[i] = hist.get(i).duration;
+			}
+		}
+		return durationArray;
+	}
+	
+	public String[] categoryToArray(List<Auto> hist) {
+		int any = 0;
+		int family = 0;
+		int frau = 0;
+		
+		for(Auto a : hist) {
+			if(a.category.equals("any")) {
+				any++;
+			} else if (a.category.equals("Familie")) {
+				family++;
+			} else if (a.category.equals("Frau")) {
+				frau++;
+			}
+		}
+		
+		String result[] = {Integer.toString(any), Integer.toString(family), Integer.toString(frau)};
+		
+		return result;
 	}
 	
 	private static String getBody(HttpServletRequest request) throws IOException{

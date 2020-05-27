@@ -10,7 +10,7 @@ class AutoIFTest {
 	
 	@BeforeEach
 	void setUp() {
-		auto = new Auto(1, 1223234234L, "IchbineinHash", "#h3hdhu");
+		auto = new Auto(1, 1223234234L, "IchbineinHash", "#h3hdhu", "", "");
 	}
 
 	@Test
