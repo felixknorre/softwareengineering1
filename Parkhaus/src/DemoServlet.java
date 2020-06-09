@@ -174,21 +174,14 @@ public class DemoServlet extends HttpServlet {
 			Parkhaus ph = getPersistentParkhaus();
 			List<Auto> hist = ph.history;
 			List<String> categories = hist.stream().map(i -> i.category).distinct().collect(Collectors.toList());
-			int [] categoryCount = new int [categories.size()]; 
-			int i = 0;
 			
-			for(String c : categories) {
-				int j = 0;
-				
-				for(Auto a : hist) {
-					if(a.category.equals(c)){
-						j++;
-					}
-					
-				}
-				categoryCount[i] = j;
-				i++;
-			}
+			List<Integer> count = (List<Integer>) categories.stream()
+					.map(i -> hist.stream().filter(d -> d.category.equals(i))
+					.collect(Collectors.toList()).size()).collect(Collectors.toList());
+			
+			int[] categoryCount = count.stream().mapToInt(i->i).toArray();
+			
+			
 			String [] categoryStringArrayStrings = new String[categories.size()];
 			categories.toArray(categoryStringArrayStrings);
 			
