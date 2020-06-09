@@ -1,5 +1,7 @@
 
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +10,7 @@ import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -170,9 +173,49 @@ public class DemoServlet extends HttpServlet {
 			
 			Parkhaus ph = getPersistentParkhaus();
 			List<Auto> hist = ph.history;
+			List<String> categories = hist.stream().map(i -> i.category).distinct().collect(Collectors.toList());
+			int [] categoryCount = new int [categories.size()]; 
+			int i = 0;
+			
+			for(String c : categories) {
+				int j = 0;
+				
+				for(Auto a : hist) {
+					if(a.category.equals(c)){
+						j++;
+					}
+					
+				}
+				categoryCount[i] = j;
+				i++;
+			}
+			String [] categoryStringArrayStrings = new String[categories.size()];
+			categories.toArray(categoryStringArrayStrings);
+			
+			String preString = "{\n" + " \"data\": [\n" + " {\n" + " \"labels\": [\n";
+			String labelString = "";
+			String inString = "],\n" + " \"values\": [\n";
+			String valueString = "";
+			String postString = " ],\n" + " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}";
+			
+			for(int k = 0;k < categoryStringArrayStrings.length; k++){
+				
+				if(k == (categoryStringArrayStrings.length - 1)) {
+					labelString += " \""+categoryStringArrayStrings[k]+"\"\n";
+					valueString += categoryCount[k] +"\n";
+					
+				} else {
+					
+					labelString += " \""+categoryStringArrayStrings[k]+"\",\n";
+					valueString += categoryCount[k] +",\n";
+				}
+			}
+			
+			String resultString = preString + labelString + inString + valueString + postString ;
+			
 			
 			PrintWriter out = response.getWriter();
-			out.println("{\n" + " \"data\": [\n" + " {\n" + " \"labels\": [\n" + " \"any\",\n" + " \"Familie\",\n" + " \"Frau\"\n" + " ],\n" + " \"values\": [\n" + categoryToArray(hist)[0] +",\n" + categoryToArray(hist)[1] + ",\n" + categoryToArray(hist)[2] +"\n" + " ],\n" + " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
+			out.println(resultString);
 			//System.out.println("{\n" + " \"data\": [\n" + " {\n" + " \"labels\": [\n" + " \"any\",\n" + " \"Familie\",\n" + " \"Frau\"\n" + " ],\n" + " \"values\": [\n" + categoryToArray(hist)[0] +",\n" + categoryToArray(hist)[1] + ",\n" + categoryToArray(hist)[2] +"\n" + " ],\n" + " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
 		}
 		
@@ -373,25 +416,7 @@ public class DemoServlet extends HttpServlet {
 		return durationArray;
 	}
 	
-	public String[] categoryToArray(List<Auto> hist) {
-		int any = 0;
-		int family = 0;
-		int frau = 0;
-		
-		for(Auto a : hist) {
-			if(a.category.equals("any")) {
-				any++;
-			} else if (a.category.equals("Familie")) {
-				family++;
-			} else if (a.category.equals("Frau")) {
-				frau++;
-			}
-		}
-		
-		String result[] = {Integer.toString(any), Integer.toString(family), Integer.toString(frau)};
-		
-		return result;
-	}
+
 	
 	private static String getBody(HttpServletRequest request) throws IOException{
         StringBuilder stringBuilder = new StringBuilder();
