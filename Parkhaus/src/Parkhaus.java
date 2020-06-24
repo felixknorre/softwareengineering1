@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class Parkhaus implements ParkhausIF{
+public class Parkhaus implements ParkhausIF, Iterable<Auto>{
 	
 	List<Auto> parkplatz;
 	List<Auto> history;
@@ -92,6 +93,11 @@ public class Parkhaus implements ParkhausIF{
 		}
 		
 		return str;
+	}
+
+	@Override
+	public Iterator<Auto> iterator() {
+		return new ParkhausIterator(this.history);
 	}
 
 }

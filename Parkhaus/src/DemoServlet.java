@@ -181,6 +181,14 @@ public class DemoServlet extends HttpServlet {
 			
 			int[] categoryCount = count.stream().mapToInt(i->i).toArray();
 			
+			//String[] categoryCount = (String[]) count.stream().map(i-> String.valueOf(i)).toArray();
+			
+			String[] countStringArrayStrings = new String[categoryCount.length];
+			
+			for(int i = 0; i < categoryCount.length; i++) {
+				countStringArrayStrings[i] = String.valueOf(categoryCount[i]);
+			}
+			
 			
 			String [] categoryStringArrayStrings = new String[categories.size()];
 			categories.toArray(categoryStringArrayStrings);
@@ -206,9 +214,14 @@ public class DemoServlet extends HttpServlet {
 			
 			String resultString = preString + labelString + inString + valueString + postString ;
 			
+			ChartJSONBuilder cjb  = new ChartJSONBuilder(categoryStringArrayStrings, countStringArrayStrings, "pie");
 			
+			String res = cjb.buildJSON();
+			System.out.println(res);
 			PrintWriter out = response.getWriter();
+			//out.println(resultString);
 			out.println(resultString);
+			
 			//System.out.println("{\n" + " \"data\": [\n" + " {\n" + " \"labels\": [\n" + " \"any\",\n" + " \"Familie\",\n" + " \"Frau\"\n" + " ],\n" + " \"values\": [\n" + categoryToArray(hist)[0] +",\n" + categoryToArray(hist)[1] + ",\n" + categoryToArray(hist)[2] +"\n" + " ],\n" + " \"type\": \"pie\"\n" + " }\n" + " ]\n" + "}");
 		}
 		
