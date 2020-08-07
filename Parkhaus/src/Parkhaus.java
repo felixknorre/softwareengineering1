@@ -2,102 +2,99 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Parkhaus implements ParkhausIF, Iterable<Auto>{
+public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	
-	List<Auto> parkplatz;
-	List<Auto> history;
+	private List<AutoIF> parkplatz;
+	
+	private int sum;
+	private int count;
+	private int min, max;
+	
+	
 	
 	public Parkhaus() {
-		parkplatz = new ArrayList<Auto>();
-		history = new ArrayList<Auto>();
+		parkplatz = new ArrayList<AutoIF>();
+		this.count = 0;
+		this.sum = 0;
+		this.max = 0;
+		this.min = 0;
 	}
 
 	@Override
-	public void addAuto(Auto newCar) {
+	public Iterator<AutoIF> iterator() {
+		return new ParkhausIterator(this.parkplatz);
+	}
+
+
+
+	@Override
+	public void addAuto(AutoIF newCar) {
 		this.parkplatz.add(newCar);
-		this.history.add(newCar);
-
 	}
 
+
+
 	@Override
-	public void removeAuto(Auto car, String dur, String price) {
-		//String hash = car.hash;
-		int number = car.nr;
-		for( int i = 0; i < this.parkplatz.size(); i++) {
-			//String currHash = this.parkplatz.get(i).hash;
-			int currNR = this.parkplatz.get(i).nr;
-			if(currNR == number) {
-				this.parkplatz.remove(i);
+	public void removeAuto(AutoIF oldcar) {
+		String number = oldcar.getNr();
+		for(AutoIF auto : this.parkplatz) {
+			if(auto.getNr().equals(number)) {
+				this.parkplatz.remove(auto);
+				this.sum += Integer.parseInt(oldcar.getPrice());
+				this.count++;
+				if(Integer.parseInt(auto.getPrice()) > this.max) {
+					this.max = Integer.parseInt(auto.getPrice());
+				}
+				if( Integer.parseInt(auto.getPrice()) < this.min) {
+					this.min = Integer.parseInt(auto.getPrice());
+				}
+				
 			}
 		}
-		int size = this.history.size();
-		for(int j = 0; j < size; j++) {
-			if(number == this.history.get(j).nr) {
-				this.history.get(j).duration = dur;
-				this.history.get(j).price = price;
-			}
-		}
-
+		
 	}
 
-	@Override
-	public int checkBelegung() {
-		// TODO Auto-generated method stub
-		return this.parkplatz.size();
-	}
+
 
 	@Override
-	public List<Auto> getParkhaus() {
-		// TODO Auto-generated method stub
+	public List<AutoIF> getParkhaus() {
 		return this.parkplatz;
 	}
-	
-	public List<Auto> getHistory(){
-		return this.history;
-	}
-	
-	public void setCeckoutData(String hash, String duration, String price) {
-		for(Auto a : history) {
-			if(a.hash.equals(hash)) {
-				a.duration = duration;
-				a.price = price;
-			}
-		}
-	}
-	
 
+
+
+	@Override
+	public String getSum() {
+		return "" + this.sum;
+	}
+
+
+
+	@Override
+	public String getAVG() {
+		
+		return "" + (this.sum / this.count);
+	}
+
+
+
+	@Override
+	public String getMinMax() {
+		return "Min: " + this.min + ", Max: " + this.max;
+	}
 	
 	public String toString() {
 		String str = "";
-		
-		for(int i = 0; i < this.parkplatz.size(); i++) {
-			if(i == 0) {
-				str += this.parkplatz.get(i).toString();
-			} else {
-				str += "," + this.parkplatz.get(i).toString();
-			}
-		}
-		
+				
+				for(int i = 0; i < this.parkplatz.size(); i++) {
+					if(i == 0) {
+						str += this.parkplatz.get(i).toString();
+					} else {
+						str += "," + this.parkplatz.get(i).toString();
+					}
+				}
+				
 		return str;
-	}
-	
-	public String toStringHistory() {
-		String str = "";
-		
-		for(int i = 0; i < this.history.size(); i++) {
-			if(i == 0) {
-				str += this.history.get(i).toString();
-			} else {
-				str += "," + this.history.get(i).toString();
-			}
-		}
-		
-		return str;
-	}
-
-	@Override
-	public Iterator<Auto> iterator() {
-		return new ParkhausIterator(this.history);
 	}
 
 }

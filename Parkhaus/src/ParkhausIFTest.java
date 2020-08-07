@@ -8,67 +8,80 @@ class ParkhausIFTest {
 	
 	ParkhausIF ph;
 	
-	Auto a1, a2;
+	AutoIF a1, a2;
 	
 	@BeforeEach
 	void setUp() {
 		ph = new Parkhaus();
 		
-		a1 = new Auto(1, 123456L, "Hajsjdhdgf", "#4287f5", "any", "1");
-		a2 = new Auto(2, 32456788, "lldkdtHHGfd", "#e0f542", "any", "2");
+		a1 = new Auto("1", "2323", "_", "_", "dfghidfgh", "#color1", "2", "Frau");
+		a2 = new Auto("2", "345445", "_", "_", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
+		
+
 	}
 
 	@Test
 	@DisplayName("Auto ins Parkhaus hinzufügen")
 	void testAddAuto() {
-		assertEquals(0, ph.checkBelegung());
+		assertEquals(0, ph.getParkhaus().size());
 		ph.addAuto(a1);
-		assertEquals(1, ph.checkBelegung());
-		assertEquals("1/123456/_/_/Hajsjdhdgf/#4287f5/1/any/1", ph.toString());
-		
-	}
-
-	@Test
-	@DisplayName("Entferne Auto aus dem Parkhaus")
-	void testRemoveAuto() {
-		ph.addAuto(a1);
+		assertEquals(1, ph.getParkhaus().size());
 		ph.addAuto(a2);
-		assertEquals("1/123456/_/_/Hajsjdhdgf/#4287f5/1/any/1,2/32456788/_/_/lldkdtHHGfd/#e0f542/2/any/2", ph.toString());
-		ph.removeAuto(a1, "2", "3");
-		assertEquals("2/32456788/_/_/lldkdtHHGfd/#e0f542/2/any/2", ph.toString());
-	}
-
-	@Test
-	@DisplayName("Gibt die Anzahl der Autos im Parkhaus zurück")
-	void testCheckBelegung() {
-		assertEquals(0, ph.checkBelegung());
-		ph.addAuto(a1);
-		assertEquals(1, ph.checkBelegung());
-		ph.addAuto(a2);
-		assertEquals(2, ph.checkBelegung());
-	}
-
-
-	@Test
-	void testToString() {
-		assertEquals("", ph.toString());
-		ph.addAuto(a1);
-		assertEquals("1/123456/_/_/Hajsjdhdgf/#4287f5/1/any/1", ph.toString());
-		ph.addAuto(a2);
-		assertEquals("1/123456/_/_/Hajsjdhdgf/#4287f5/1/any/1,2/32456788/_/_/lldkdtHHGfd/#e0f542/2/any/2", ph.toString());
+		assertEquals(2, ph.getParkhaus().size());
 	}
 	
 	@Test
-	@DisplayName("Checkout set")
-	void testSetCeckoutData() {
-		ph.addAuto(a1);
-		assertEquals("1/123456/_/_/Hajsjdhdgf/#4287f5/1/any/1", ph.toString());
-		ph.removeAuto(a1, "2", "3");
-		Auto testAuto  = ph.getHistory().get(0);
-		assertEquals("2", testAuto.duration);
-		assertEquals("3", testAuto.price);
-		assertEquals("1/123456/3/2/Hajsjdhdgf/#4287f5/1/any/1", testAuto.toString());
+	@DisplayName("Auto ins Parkhaus verlassen")
+	void testRemoveAuto() {
+		
 		
 	}
+	
+	@Test
+	@DisplayName("Sum")
+	void testGetSum() {
+		ph.addAuto(a1);
+		ph.addAuto(a2);
+		a1 = new Auto("1", "2323", "100", "100", "dfghidfgh", "#color1", "2", "Frau");
+		ph.removeAuto(a1);
+		assertEquals("100", ph.getSum());
+		a2 = new Auto("2", "345445", "_", "_", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
+		ph.removeAuto(a2);
+		assertEquals("300", ph.getSum());
+		
+	}
+	
+	@Test
+	@DisplayName("AVG")
+	void testGetAVG() {
+		ph.addAuto(a1);
+		ph.addAuto(a2);
+		a1 = new Auto("1", "2323", "100", "100", "dfghidfgh", "#color1", "2", "Frau");
+		a2 = new Auto("2", "345445", "200", "200", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
+		ph.removeAuto(a1);
+		ph.removeAuto(a2);
+		assertEquals("150", ph.getAVG());
+	}
+	
+	@Test
+	@DisplayName("Min/Max-Parkhaus-Price")
+	void testMinMax() {
+		ph.addAuto(a1);
+		ph.addAuto(a2);
+		a1 = new Auto("1", "2323", "100", "100", "dfghidfgh", "#color1", "2", "Frau");
+		a2 = new Auto("2", "345445", "200", "200", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
+		ph.removeAuto(a1);
+		ph.removeAuto(a2);
+		assertEquals("150", ph.getMinMax());
+	}
+	
+	@Test
+	@DisplayName("Parkhaus ausgeben")
+	void testToString() {
+		
+	}
+	
+	
+
 
 }

@@ -1,15 +1,15 @@
 import java.util.Iterator;
 import java.util.List;
 
-public class ParkhausIterator implements Iterator<Auto>{
+public class ParkhausIterator implements Iterator<AutoIF>{
 	
-	List<Auto> liste;
+	List<AutoIF> liste;
 	int pointer;
 	
-	public ParkhausIterator(List<Auto> liste) {
+	public ParkhausIterator(List<AutoIF> liste) {
 		this.pointer = 0;
-		for(Auto a: liste) {
-			if(a.duration.equals("_") && a.price.equals("_")) {
+		for(AutoIF a: liste) {
+			if(a.getDuration().equals("_") && a.getPrice().equals("_")) {
 				this.liste.add(a);
 			}
 		}
@@ -21,7 +21,7 @@ public class ParkhausIterator implements Iterator<Auto>{
 	}
 
 	@Override
-	public Auto next() {
+	public AutoIF next() {
 		return this.liste.get(pointer);
 	}
 
