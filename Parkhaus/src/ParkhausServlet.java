@@ -35,6 +35,7 @@ public class ParkhausServlet extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		ChartJSONBuilder cjb = new ChartJSONBuilder();
 		
 		
 		switch (request.getParameter("cmd")) {
@@ -43,11 +44,31 @@ public class ParkhausServlet extends HttpServlet {
 			out.println(getParkhausConfig().toString());
 			break;
 		case "cars":
-			out.println("864/1596807167716/_/_/2edc97d44f134aad80a61bf291cc8053/#c1f08d/10/any/864");
+			out.println(getParkhaus().toString());
 			break;
+		case "Summe":
+			out.println((Double.parseDouble(getParkhaus().getSum()) / 100));
+			break;
+		case "AVG":
+			out.println(getParkhaus().getAVG());
+			break;
+		case "Min/Max-Price":
+			out.println(getParkhaus().getMinMax());
+			break;
+		case "Chart":
+			String test = cjb.buildJSON(getParkhaus(), "bar");
+			System.out.println(test);
+			out.println(test);
+			//out.println("{\n" + " \"data\": [\n" + " {\n" + " \"x\": [\n" + " \"Car_1\",\n" + " \"Car_2\",\n" + " \"Car_3\"\n" + " ],\n" + " \"y\": [\n" + " 20,\n" + " 14,\n" + " 23\n" + " ],\n" + " \"type\": \"bar\"\n" + " }\n" + " ]\n" + "}");
+			break;
+		case "FamilyChart":
+			String test2 = cjb.buildJSON(getParkhaus(), "pie");
+			System.out.println(test2);
+			out.println(test2);
 			
+			break;
 		default:
-			System.out.println("Not defined get command...");
+			System.out.println("Not defined get command: " + request.getParameter("cmd"));
 			break;
 		}
 	}
@@ -60,6 +81,7 @@ public class ParkhausServlet extends HttpServlet {
 		
 		// tmp config var
 		ParkhausConfigIF p;
+		ParkhausIF ph;
 		
 		// get request body
 		String body = getBody(request);
@@ -67,13 +89,19 @@ public class ParkhausServlet extends HttpServlet {
 		
 		String[] requestParam = body.split(",");
 		
-		
+
 		switch (requestParam[0]) {
 		case "enter":
 			System.out.println("enter...");
+			ph = getParkhaus();
+			ph.addAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
+			setParkhaus(ph);
 			break;
 		case "leave":
 			System.out.println("leave...");
+			ph = getParkhaus();
+			ph.removeAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
+			setParkhaus(ph);
 			break;
 		case "change_Max":
 			System.out.println("change_Max...");
@@ -143,6 +171,11 @@ public class ParkhausServlet extends HttpServlet {
 		}
 		
 		return ph;
+	}
+	// set Parkhaus
+	private void setParkhaus(ParkhausIF ph) {
+		ServletContext application = getApplication();
+		application.setAttribute("parkhaus", ph);
 	}
 	
 

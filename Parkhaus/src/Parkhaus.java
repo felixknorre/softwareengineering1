@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -5,15 +6,20 @@ import java.util.List;
 public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	
 	private List<AutoIF> parkplatz;
+	private List<AutoIF> history;
 	
 	private int sum;
 	private int count;
 	private int min, max;
 	
+    DecimalFormat f = new DecimalFormat("##.00");
+ 
+	
 	
 	
 	public Parkhaus() {
-		parkplatz = new ArrayList<AutoIF>();
+		this.parkplatz = new ArrayList<AutoIF>();
+		this.history = new ArrayList<AutoIF>();
 		this.count = 0;
 		this.sum = 0;
 		this.max = 0;
@@ -37,20 +43,28 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	@Override
 	public void removeAuto(AutoIF oldcar) {
 		String number = oldcar.getNr();
-		for(AutoIF auto : this.parkplatz) {
-			if(auto.getNr().equals(number)) {
-				this.parkplatz.remove(auto);
-				this.sum += Integer.parseInt(oldcar.getPrice());
-				this.count++;
-				if(Integer.parseInt(auto.getPrice()) > this.max) {
-					this.max = Integer.parseInt(auto.getPrice());
+		
+		for(int i = 0; i < this.parkplatz.size(); i++ ) {
+			AutoIF currAuto = this.parkplatz.get(i);
+			if(currAuto.getNr().equals(number)) {
+				// remove Auto aus Parkhaus
+				this.parkplatz.remove(currAuto);
+				// adde Auto to history
+				this.history.add(oldcar);
+				if(Integer.parseInt(oldcar.getPrice()) > this.max) {
+					this.max = Integer.parseInt(oldcar.getPrice());
 				}
-				if( Integer.parseInt(auto.getPrice()) < this.min) {
-					this.min = Integer.parseInt(auto.getPrice());
+				if( Integer.parseInt(oldcar.getPrice()) < this.min) {
+					this.min = Integer.parseInt(oldcar.getPrice());
+				} else if(this.min == 0) {
+					this.min = Integer.parseInt(oldcar.getPrice());
 				}
 				
 			}
+			
 		}
+		
+		
 		
 	}
 
@@ -60,27 +74,31 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	public List<AutoIF> getParkhaus() {
 		return this.parkplatz;
 	}
+	
+	@Override
+	public List<AutoIF> getHistory() {
+		return this.history;
+	}
 
 
 
 	@Override
 	public String getSum() {
-		return "" + this.sum;
+		return "" + this.history.stream().map(i -> Integer.parseInt(i.getPrice())).reduce(0, (x,y) -> x + y);
 	}
 
 
 
 	@Override
 	public String getAVG() {
-		
-		return "" + (this.sum / this.count);
+		return "" + f.format(Double.parseDouble(this.getSum()) / (100 * this.history.size()));
 	}
 
 
 
 	@Override
 	public String getMinMax() {
-		return "Min: " + this.min + ", Max: " + this.max;
+		return "Min: " + (this.min / 100.0) + ", Max: " + (this.max / 100.0);
 	}
 	
 	public String toString() {
