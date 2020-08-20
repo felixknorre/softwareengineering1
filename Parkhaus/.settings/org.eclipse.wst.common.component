@@ -4,6 +4,6 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <property name="java-output-path" value="/Parkhaus/build/classes"/>
-        <property name="context-root" value="mk_se1_ss20_team3"/>
+        <property name="context-root" value="Parkhaus"/>
     </wb-module>
 </project-modules>

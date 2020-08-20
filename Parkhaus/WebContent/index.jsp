@@ -16,9 +16,11 @@
 <body>
 	<h1>Parkhaus</h1>
 	<hr>
+	<!-- dev:  http://localhost:8080/mk_se1_ss20_team3/Parkhaus-->
+	<!-- deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Parkhaus -->
 	<ccm-parkhaus-9-0-0
 		name="P1"
-		server_url="http://localhost:8080/mk_se1_ss20_team3/Parkhaus"
+		server_url="http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Parkhaus"
 		client_categories='["any", "Frau", "Familie"]'
 		extra_buttons='["Summe", "AVG", "Min/Max-Price"]'
 		extra_charts='["Chart", "FamilyChart"]'
