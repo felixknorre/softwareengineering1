@@ -44,6 +44,7 @@ public class ParkhausServlet extends HttpServlet {
 			out.println(getParkhausConfig().toString());
 			break;
 		case "cars":
+			System.out.println("load cars...");
 			out.println(getParkhaus().toString());
 			break;
 		case "Summe":
@@ -82,6 +83,7 @@ public class ParkhausServlet extends HttpServlet {
 		// tmp config var
 		ParkhausConfigIF p;
 		ParkhausIF ph;
+		ParkeinweiserIF pew;
 		
 		// get request body
 		String body = getBody(request);
@@ -93,21 +95,41 @@ public class ParkhausServlet extends HttpServlet {
 		switch (requestParam[0]) {
 		case "enter":
 			System.out.println("enter...");
+			// get Parkplatz
+			pew = getParkeinweiser();
+			String parkplatz = "" + pew.getParkplatz();
+			setParkeinweiser(pew);
+			System.out.println(parkplatz);
+			// park Auto in Parkhaus
 			ph = getParkhaus();
-			ph.addAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
+			ph.addAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], parkplatz, requestParam[8]));
 			setParkhaus(ph);
+			// respone to client the parkplatz number
+			int length = parkplatz.length();
+			response.setContentLength(length);
+			response.getOutputStream().write(parkplatz.getBytes());
 			break;
 		case "leave":
 			System.out.println("leave...");
+			// remove Auto 
 			ph = getParkhaus();
 			ph.removeAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
 			setParkhaus(ph);
+			// return Parkplatz
+			pew = getParkeinweiser();
+			pew.returnParkplatz(Integer.parseInt(requestParam[7]));
+			setParkeinweiser(pew);
 			break;
 		case "change_Max":
 			System.out.println("change_Max...");
+			// update ParkhausConfig
 			p = getParkhausConfig();
 			p.setMaxAutos((String)requestParam[2]);
 			setParkhausConfig(p);
+			// update Parkeinweiser
+			pew = getParkeinweiser();
+			pew.changeSize(Integer.parseInt(requestParam[2]));
+			setParkeinweiser(pew);
 			break;
 		case "change_open_from":
 			System.out.println("change_open_from...");
@@ -176,6 +198,26 @@ public class ParkhausServlet extends HttpServlet {
 	private void setParkhaus(ParkhausIF ph) {
 		ServletContext application = getApplication();
 		application.setAttribute("parkhaus", ph);
+	}
+	
+	//get Parkeinweiser
+	private ParkeinweiserIF getParkeinweiser() {
+		ParkeinweiserIF pew;
+		
+		ServletContext application = getApplication();
+		pew = (ParkeinweiserIF)(application.getAttribute("parkeinweiser"));
+		
+		if(pew == null) {
+			pew = new Parkeinweiser(Integer.parseInt(getParkhausConfig().getMaxAuto()));
+		}
+		
+		return pew;
+	}
+	
+	// set Parkeinweiser
+	private void setParkeinweiser(ParkeinweiserIF pew) {
+		ServletContext application = getApplication();
+		application.setAttribute("parkeinweiser", pew);
 	}
 	
 

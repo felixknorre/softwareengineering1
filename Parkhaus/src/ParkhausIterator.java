@@ -17,12 +17,15 @@ public class ParkhausIterator implements Iterator<AutoIF>{
 
 	@Override
 	public boolean hasNext() {
-		return pointer < this.liste.size();
+		return this.pointer < this.liste.size();
 	}
 
 	@Override
 	public AutoIF next() {
-		return this.liste.get(pointer);
+		if(0 <= this.pointer && this.pointer < this.liste.size()) {
+			return this.liste.get(this.pointer);
+		}
+		return null;
 	}
 
 
