@@ -48,10 +48,10 @@ public class ParkhausServlet extends HttpServlet {
 			out.println(getParkhaus().toString());
 			break;
 		case "Summe":
-			out.println((Double.parseDouble(getParkhaus().getSum()) / 100));
+			out.println(getParkhaus().getSum()  + " Euro");
 			break;
 		case "AVG":
-			out.println(getParkhaus().getAVG());
+			out.println(getParkhaus().getAVG() + " Euro");
 			break;
 		case "Min/Max-Price":
 			out.println(getParkhaus().getMinMax());
@@ -120,8 +120,8 @@ public class ParkhausServlet extends HttpServlet {
 			pew.returnParkplatz(Integer.parseInt(requestParam[7]));
 			setParkeinweiser(pew);
 			break;
-		case "change_Max":
-			System.out.println("change_Max...");
+		case "change_max":
+			System.out.println("change_max...");
 			// update ParkhausConfig
 			p = getParkhausConfig();
 			p.setMaxAutos((String)requestParam[2]);

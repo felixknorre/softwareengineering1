@@ -84,14 +84,22 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 
 	@Override
 	public String getSum() {
-		return "" + this.history.stream().map(i -> Integer.parseInt(i.getPrice())).reduce(0, (x,y) -> x + y);
+		if(this.history.isEmpty()) {
+			return "0.00";
+		} else {
+			return "" + (this.history.stream().map(i -> Integer.parseInt(i.getPrice())).reduce(0, (x,y) -> x + y) / 100);
+		}
 	}
 
 
 
 	@Override
 	public String getAVG() {
-		return "" + f.format(Double.parseDouble(this.getSum()) / (100 * this.history.size()));
+		if(this.history.isEmpty()) {
+			return "0.00";
+		} else {
+			return "" + f.format(Double.parseDouble(this.getSum()) / (100 * this.history.size()));
+		}
 	}
 
 

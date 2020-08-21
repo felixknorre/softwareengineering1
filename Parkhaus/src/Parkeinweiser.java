@@ -39,6 +39,7 @@ public class Parkeinweiser implements ParkeinweiserIF{
 		if(oldSize < newSize) {
 			for(int i = oldSize + 1; i <= newSize; i++) {
 				this.parkplaetze.add(i);
+				System.out.println(i);
 			}
 		} else if(oldSize > newSize) {
 			for(int i = oldSize; i > newSize; i--) {
