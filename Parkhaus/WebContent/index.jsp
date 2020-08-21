@@ -38,7 +38,7 @@
 	<h1>Parkhaus</h1>
 	<hr>
 	<div class="pagelinks">
-		<a href="http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Parkhaus">Parkhaus</a>
+		<a href="http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/">Parkhaus</a>
 		<a href="http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Preisliste">Preisliste</a>
 	</div>
 	<hr>
