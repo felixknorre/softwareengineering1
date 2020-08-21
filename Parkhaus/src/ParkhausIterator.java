@@ -1,5 +1,6 @@
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ParkhausIterator implements Iterator<AutoIF>{
 	
@@ -21,11 +22,13 @@ public class ParkhausIterator implements Iterator<AutoIF>{
 	}
 
 	@Override
-	public AutoIF next() {
+	public AutoIF next(){
 		if(0 <= this.pointer && this.pointer < this.liste.size()) {
 			return this.liste.get(this.pointer);
+		} else {
+			throw new NoSuchElementException("No Element on Index: " + this.pointer);
 		}
-		return null;
+		
 	}
 
 
