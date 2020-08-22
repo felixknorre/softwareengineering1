@@ -5,7 +5,7 @@
 ## Digitalisierungskonzept
 ---
 
-Die Aufgabe des Semesterprojekt ist Digitalisierung eines Parkhauses. Das Projekt soll in einem Team bestehend aus drei Leuten in 10 Wochen umgesetzt werden. Die Parkhauskunden sollen ein Ticket ziehen können, mit ihrem Auto in das Parkhaus fahren können, das Ticket bezahlen können und das Parkhaus wieder verlassen können. Firmenkunden sollten reservierte Parkplätze erhalten, Abonnenten sollten einen Monatsticket kaufen können und Frauen, Familien und Personen mit einer Behinderung sollen Sonderparkplätze (näher am Ausgang und breiter) erhalten. Parkhausbetreiber und Parkhausmitarbeiter sollten jederzeit einen Überblick über die Parkhaussituationhaben (Freie, belegte Parkplätze). Der Parkhausbetreiber und Investoren sollte ausderdem Statistiken über das Parkverhalten der Kunden erhalten. Das Finanzamt erhält Informationen über Umsätze.
+Die Aufgabe des Semesterprojekt ist Digitalisierung eines Parkhauses. Das Projekt soll in einem Team in 10 Wochen in 4 Scrum Sprints umgesetzt werden. Es soll ein Parkhaus simuliert werden. Die Parkhauskunden sollen ein Ticket ziehen können, mit ihrem Auto in das Parkhaus fahren können, das Ticket wieder bezahlen können und das Parkhaus wieder verlassen können. Kunden sollen ein Dauerkarte kaufen können. Der Parkhausbetreiber und Parkhausmitarbeiter sollen einen Überblick über die Parkhaussituation (freie, belegte Parkplätze) haben. Der Parkhausbetreiber und Investoren sollen außerdem Statistiken über das Parkverhalten der Kunden erhalten. Das Finanzamt erhält Informationen über die Umsätze.
 
 ## User Stories
 ---
@@ -26,7 +26,17 @@ Die Aufgabe des Semesterprojekt ist Digitalisierung eines Parkhauses. Das Projek
 
 ## Priorisierung der User Stories
 
+Nach dem alle User-Stories gesammelt wurden, werden diese mit Agile-Estimating bewertet. Es gibt einmal die Value Points, die den Mehrwert für das Produkt beschreiben und es gibt die Story-Points, die den Aufwand beschreiben. Als Werte nutzt man Zahlen der Fibonacci-Folge. Hat man die Wertevergabe durchgeführt, bildet man den Quotienten Mehrwert pro Aufwand (Value Points / Story Points). Durch den Quotienten ergibt sich eine Priorisierung der User Stories.
+
+![MVP](./images/vision/agileestimating.png)
+
 ## Minimum Viable Product (MVP)
+
+Nachdem man eine Priorisierung der User Stories vorgenommen hat, kann man das Minimim Viable Produkt bestimmten. Unter Berücksichtigung der Abhänigkeiten von bestimmten User-Stories und dem Quotienten Mehrwert pro Aufwand bildet man eine neue Liste, die die User-Stories enthält die mit minimalem Aufwand den wertvollsten Kundenbedraft decken. \
+\
+In dem Parkhausprojekt ergab sich so folgende Liste:
+![MVP](./images/vision/mvp.png)
+Hierbei gibt es die Abhänigkeit, Zeitmessung vot Ticket bezahlen und Parkhaus betreten vor Ticket zahlen.
 
 ## UML Use Case-Diagramm
 
@@ -51,3 +61,6 @@ Die Aufgabe des Semesterprojekt ist Digitalisierung eines Parkhauses. Das Projek
 ## Resumée und Fazit
 
 ## Präsentation und Demo des Projekts
+[Präsentation](https://www.google.de)\
+[Demo Video](https://www.google.de)\
+[Live Demo](http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/)
