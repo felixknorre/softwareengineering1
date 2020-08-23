@@ -35,18 +35,55 @@ Nach dem alle User-Stories gesammelt wurden, werden diese mit Agile-Estimating b
 Nachdem man eine Priorisierung der User Stories vorgenommen hat, kann man das Minimim Viable Produkt bestimmten. Unter Berücksichtigung der Abhänigkeiten von bestimmten User-Stories und dem Quotienten Mehrwert pro Aufwand bildet man eine neue Liste, die die User-Stories enthält die mit minimalem Aufwand den wertvollsten Kundenbedraft decken. \
 \
 In dem Parkhausprojekt ergab sich so folgende Liste:
-![MVP](./images/vision/mvp.png)
+![MVP](./images/vision/mvp.png)  
 Hierbei gibt es die Abhänigkeit, Zeitmessung vot Ticket bezahlen und Parkhaus betreten vor Ticket zahlen.
 
 ## UML Use Case-Diagramm
 
+![Use-Case-Diagramm](./images/uml/usecase.png)
+
 ## Robustheitsdiagramm
 
+![Robustheitsdiagramm](./images/uml/robustheitsanalyse.png)
+
 ## UML Klassendiagramme
+--- 
+### Anforderungskatalog nach Balzert
+Das Parkhaus beinhaltet Parkplätze.Ein Parkhaus hat einen Standort, einen Namen und eine Anzahl an Parkplätzen.
+
+Ein Customer hat eine ID zur indentifikation, einen Namen. Zudem kann ein Customer ein Ticket ziehen, Ticket bezahlen.
+
+Ein Investor hat eine ID und einen Namen, er kann Statistiken einsehen.
+
+Parkhausbetreiber hat eine ID und einen Namen, er kann Statistiken einsehen und abfragen, so wie die Belegung betrachten.
+
+Ein Mitarbeiter hat eine ID und einen Namen und kann die Belegung abfragen.
+
+Ein Ticket hat eine ID und einen Timer zudem ist das Ticket mit zwei Zeiten ausgesattet. 
+
+Die erste Zeit behinhaltet den Zeitpunkt vom ziehen des Tickets und der zweite Zeitpunkt behinhaltet den Zeitpunkt des bezahlens.Ein Ticket wird validiert.
+
+Das Auto hat ein Nummernschild und eine Farbe, zudem wird es einem Customer zugewiesen.
+
+Bei betrachten der Klasse Customer Investor Parkhausbetreiber und Mitarbeiter fällt auf das diese Redunate Attribute beinhalten und diese in eine Oberklasse Mensch augelagert werden können.
+
+Wenn ein Ticket gezogen wird, wird ein Ticket erstellt. Dies Ticket bekommt die aktuelle Zeit übergeben. Wird das Ticket bezahlt bekommt das Ticket den Bezahlzeitpunkt als zweite Zeiteinheit. Wird ein Ticket validiert wird, wird geprüft ob dieses Ticket bezahlt wurde und zu welcher Zeit es bezahlt wurde.
+
+Wenn die Belegung abgefragt wird, wird die Anzahl der Belgeten Parkplätze überprüft.
+Um Subsysteme zu bilden haben wir zu wenige Klasse.
+
+--- 
+
+![Klassendiagramm](./images/uml/classdiagramm.png)
+
 
 ## UML Sequenzdiagramme
 
+![Sequenzdiagramme](./images/uml/sequenzdiagramm.png)
+
 ## UML Aktivitätsdiagramme
+
+![Aktivitätsdiagramme](./images/uml/aktivitaetsdiagramm.png)
 
 ## UML Verteilungsdiagramm
 
