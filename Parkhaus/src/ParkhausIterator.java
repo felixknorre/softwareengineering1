@@ -9,11 +9,7 @@ public class ParkhausIterator implements Iterator<AutoIF>{
 	
 	public ParkhausIterator(List<AutoIF> liste) {
 		this.pointer = 0;
-		for(AutoIF a: liste) {
-			if(a.getDuration().equals("_") && a.getPrice().equals("_")) {
-				this.liste.add(a);
-			}
-		}
+		this.liste = liste;
 	}
 
 	@Override
@@ -23,10 +19,13 @@ public class ParkhausIterator implements Iterator<AutoIF>{
 
 	@Override
 	public AutoIF next(){
+		AutoIF tmp;
 		if(0 <= this.pointer && this.pointer < this.liste.size()) {
-			return this.liste.get(this.pointer);
+			tmp = this.liste.get(this.pointer);
+			this.pointer++;
+			return tmp;
 		} else {
-			throw new NoSuchElementException("No Element on Index: " + this.pointer);
+			throw new NoSuchElementException("No Element on Index: " + this.pointer + ", max. Index: " + this.liste.size());
 		}
 		
 	}

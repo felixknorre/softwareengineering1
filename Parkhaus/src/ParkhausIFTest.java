@@ -53,10 +53,10 @@ class ParkhausIFTest {
 		ph.addAuto(a2);
 		a1 = new Auto("1", "2323", "100", "100", "dfghidfgh", "#color1", "2", "Frau");
 		ph.removeAuto(a1);
-		assertEquals("100", ph.getSum());
+		assertEquals("1", ph.getSum());
 		a2 = new Auto("2", "345445", "200", "200", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
 		ph.removeAuto(a2);
-		assertEquals("300", ph.getSum());
+		assertEquals("3", ph.getSum());
 		
 	}
 	
@@ -69,7 +69,7 @@ class ParkhausIFTest {
 		a2 = new Auto("2", "345445", "200", "200", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
 		ph.removeAuto(a1);
 		ph.removeAuto(a2);
-		assertEquals("150.00", ph.getAVG());
+		assertEquals("0.01", ph.getAVG());
 	}
 	
 	@Test

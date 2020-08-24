@@ -12,10 +12,7 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	private int count;
 	private int min, max;
 	
-    DecimalFormat f = new DecimalFormat("##.00");
- 
-	
-	
+    DecimalFormat f = new DecimalFormat("#0.00");
 	
 	public Parkhaus() {
 		this.parkplatz = new ArrayList<AutoIF>();
@@ -111,14 +108,20 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	
 	public String toString() {
 		String str = "";
+		
+		Iterator<AutoIF> iter = this.iterator();
 				
-				for(int i = 0; i < this.parkplatz.size(); i++) {
-					if(i == 0) {
-						str += this.parkplatz.get(i).toString();
-					} else {
-						str += "," + this.parkplatz.get(i).toString();
-					}
-				}
+		while(iter.hasNext()) {
+			AutoIF tmp = iter.next();
+			
+			if(iter.hasNext()) {
+				str += tmp.toString() + ",";
+			} else {
+				str += tmp.toString();
+			}
+
+		}
+				
 				
 		return str;
 	}
