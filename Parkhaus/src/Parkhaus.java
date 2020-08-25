@@ -1,4 +1,4 @@
-import java.text.DecimalFormat;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,7 +14,7 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	private int count;
 	private int min, max;
 	
-    DecimalFormat f = new DecimalFormat("#0.00");
+    
 	
 	public Parkhaus() {
 		this.parkplatz = new ArrayList<AutoIF>();
@@ -53,9 +53,11 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 				this.parkplatz.remove(currAuto);
 				// adde Auto to history
 				this.history.add(oldcar);
+				// set max value
 				if(Integer.parseInt(oldcar.getPrice()) > this.max) {
 					this.max = Integer.parseInt(oldcar.getPrice());
 				}
+				// set min value
 				if( Integer.parseInt(oldcar.getPrice()) < this.min) {
 					this.min = Integer.parseInt(oldcar.getPrice());
 				} else if(this.min == 0) {
@@ -87,30 +89,34 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 
 
 	@Override
-	public String getSum() {
+	public Double getSum() {
 		if(this.history.isEmpty()) {
-			return "0.00";
+			return Double.parseDouble("0");
 		} else {
-			return "" + (this.history.stream().map(i -> Integer.parseInt(i.getPrice())).reduce(0, (x,y) -> x + y) / 100);
+			return Double.parseDouble("" + this.history.stream().map(i -> Integer.parseInt(i.getPrice())).reduce(0, (x,y) -> x + y)) / 100;
 		}
 	}
 
 
 
 	@Override
-	public String getAVG() {
+	public Double getAVG() {
 		if(this.history.isEmpty()) {
-			return "0.00";
+			return 0.00;
 		} else {
-			return "" + f.format(Double.parseDouble(this.getSum()) / (100 * this.history.size()));
+			return Double.parseDouble("" + this.getSum()) / (this.history.size());
 		}
 	}
 
 
 
 	@Override
-	public String getMinMax() {
-		return "Min: " + (this.min / 100.0) + ", Max: " + (this.max / 100.0);
+	public Double getMin() {
+		return this.min / 100.0;
+	}
+	@Override
+	public Double getMax() {
+		return this.max / 100.0;
 	}
 	
 	public String toString() {

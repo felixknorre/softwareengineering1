@@ -6,8 +6,9 @@ public interface ParkhausIF extends ObservableIF{
 	public void removeAuto(AutoIF oldcar);
 	public List<AutoIF> getParkhaus();
 	public List<AutoIF> getHistory();
-	public String getSum();
-	public String getAVG();
-	public String getMinMax();
+	public Double getSum();
+	public Double getAVG();
+	public Double getMin();
+	public Double getMax();
 	public String toString();
 }

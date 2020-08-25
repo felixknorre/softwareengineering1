@@ -51,12 +51,12 @@ class ParkhausIFTest {
 	void testGetSum() {
 		ph.addAuto(a1);
 		ph.addAuto(a2);
-		a1 = new Auto("1", "2323", "100", "100", "dfghidfgh", "#color1", "2", "Frau");
-		ph.removeAuto(a1);
-		assertEquals("1", ph.getSum());
+		AutoIF newa1 = new Auto("1", "2323", "100", "100", "dfghidfgh", "#color1", "2", "Frau");
+		ph.removeAuto(newa1);
+		assertEquals(1.0, ph.getSum(), 0.01);
 		a2 = new Auto("2", "345445", "200", "200", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
 		ph.removeAuto(a2);
-		assertEquals("3", ph.getSum());
+		assertEquals(3.0, ph.getSum(), 0.001);
 		
 	}
 	
@@ -69,7 +69,7 @@ class ParkhausIFTest {
 		a2 = new Auto("2", "345445", "200", "200", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
 		ph.removeAuto(a1);
 		ph.removeAuto(a2);
-		assertEquals("0.01", ph.getAVG());
+		assertEquals(1.5, ph.getAVG(), 0.001);
 	}
 	
 	@Test
@@ -81,7 +81,8 @@ class ParkhausIFTest {
 		a2 = new Auto("2", "345445", "200", "200", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
 		ph.removeAuto(a1);
 		ph.removeAuto(a2);
-		assertEquals("Min: 1.0, Max: 2.0", ph.getMinMax());
+		assertEquals(1.00, ph.getMin(), "min valie");
+		assertEquals(2.00, ph.getMax(), "max value");
 	}
 	
 	@Test

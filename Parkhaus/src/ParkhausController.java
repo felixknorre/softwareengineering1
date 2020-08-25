@@ -22,5 +22,9 @@ public class ParkhausController implements ParkhausControllerIF{
 		model.removeAuto(car);
 		
 	}
+	
+	public ParkhausIF getModel() {
+		return this.model;
+	}
 
 }
