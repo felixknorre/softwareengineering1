@@ -75,7 +75,27 @@ public class PreisListeServlet extends HttpServlet {
 		// deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Preisliste
 		result += "<a href=\"http://localhost:8080/Parkhaus/Preisliste\">Preisliste</a> </div>\n";
 		result += "<hr>";
-		result += createHTMLTable();
+		
+		// get ServletContext
+		ServletContext application = getServletConfig().getServletContext();
+		
+		HistoryTableView htv = (HistoryTableView)(application.getAttribute("historytableview"));
+		
+		if(htv == null) {
+			// get Parkhaus
+			ParkhausIF ph;
+			ph = (ParkhausIF)(application.getAttribute("parkhaus"));
+			if(ph == null) {
+				ph = new Parkhaus();
+			}
+			
+			htv = new HistoryTableView(ph);
+			application.setAttribute("historytableview", htv);
+		}
+		
+		
+		
+		result += htv.view();
 		
 		out.println(result);
 	}
@@ -102,6 +122,8 @@ public class PreisListeServlet extends HttpServlet {
 		if(ph == null) {
 			ph = new Parkhaus();
 		}
+		
+		
 		
 		if(ph.getHistory().isEmpty()) {
 			htmlString += "<p class=\"info\">Bis jetzt hat kein Kunde bezahlt...</p>";
