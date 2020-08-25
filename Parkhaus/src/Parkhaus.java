@@ -8,6 +8,8 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	private List<AutoIF> parkplatz;
 	private List<AutoIF> history;
 	
+	private List<ObserverIF> obs;
+	
 	private int sum;
 	private int count;
 	private int min, max;
@@ -17,6 +19,7 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	public Parkhaus() {
 		this.parkplatz = new ArrayList<AutoIF>();
 		this.history = new ArrayList<AutoIF>();
+		this.obs = new ArrayList<ObserverIF>();
 		this.count = 0;
 		this.sum = 0;
 		this.max = 0;
@@ -33,6 +36,8 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	@Override
 	public void addAuto(AutoIF newCar) {
 		this.parkplatz.add(newCar);
+		// notify all views
+		notifyObserver();
 	}
 
 
@@ -61,6 +66,8 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 			
 		}
 		
+		// notify all views
+		notifyObserver();
 		
 		
 	}
@@ -124,6 +131,27 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 				
 				
 		return str;
+	}
+
+	@Override
+	public void registerObserver(ObserverIF o) {
+		// add new view
+		this.obs.add(o);
+	}
+
+	@Override
+	public void removeObserver(ObserverIF o) {
+		// remove old view
+		this.obs.remove(o);
+		
+	}
+
+	@Override
+	public void notifyObserver() {
+		for(ObserverIF o: this.obs) {
+			o.update();
+		}
+		
 	}
 
 }

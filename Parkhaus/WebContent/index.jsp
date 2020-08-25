@@ -38,15 +38,17 @@
 	<h1>Parkhaus</h1>
 	<hr>
 	<div class="pagelinks">
-		<a href="http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/">Parkhaus</a>
-		<a href="http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Preisliste">Preisliste</a>
+		<!-- http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/  -->
+		<a href="http://localhost:8080/Parkhaus/">Parkhaus</a>
+		<!-- http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Preisliste  -->
+		<a href="http://localhost:8080/Parkhaus/Preisliste">Preisliste</a>
 	</div>
 	<hr>
 	<!-- dev:  http://localhost:8080/Parkhaus/Parkhaus-->
 	<!-- deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Parkhaus -->
 	<ccm-parkhaus-9-1-3
 		name="P1"
-		server_url="http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Parkhaus"
+		server_url="http://localhost:8080/Parkhaus/Parkhaus"
 		client_categories='["any", "Frau", "Familie"]'
 		extra_buttons='["Summe", "AVG", "Min/Max-Price"]'
 		extra_charts='["Chart", "FamilyChart"]'

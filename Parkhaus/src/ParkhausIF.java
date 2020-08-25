@@ -1,6 +1,6 @@
 import java.util.List;
 
-public interface ParkhausIF {
+public interface ParkhausIF extends ObservableIF{
 	
 	public void addAuto(AutoIF newCar);
 	public void removeAuto(AutoIF oldcar);
