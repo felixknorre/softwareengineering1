@@ -70,10 +70,10 @@ public class PreisListeServlet extends HttpServlet {
 		result += "<hr>";
 		// dev: http://localhost:8080/Parkhaus/
 		// deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/
-		result += "<div class=\"pagelinks\"> <a href=\"http://localhost:8080/Parkhaus/\">Parkhaus</a> \n";
+		result += "<div class=\"pagelinks\"> <a href=\"http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/\">Parkhaus</a> \n";
 		// dev: http://localhost:8080/Parkhaus/Preisliste
 		// deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Preisliste
-		result += "<a href=\"http://localhost:8080/Parkhaus/Preisliste\">Preisliste</a> </div>\n";
+		result += "<a href=\"http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Preisliste\">Preisliste</a> </div>\n";
 		result += "<hr>";
 		
 		// get ServletContext
