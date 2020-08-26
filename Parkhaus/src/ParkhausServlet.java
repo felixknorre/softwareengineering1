@@ -41,7 +41,7 @@ public class ParkhausServlet extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		ChartJSONBuilder cjb = new ChartJSONBuilder();
+		
 		
 		
 		switch (request.getParameter("cmd")) {
@@ -63,15 +63,13 @@ public class ParkhausServlet extends HttpServlet {
 			out.println(getMinMaxView().view());
 			break;
 		case "Chart":
-			String test = cjb.buildJSON(getParkhaus(), "bar");
-			System.out.println(test);
-			out.println(test);
+			System.out.println(getBarChartView().view());
+			out.println(getBarChartView().view());
 			//out.println("{\n" + " \"data\": [\n" + " {\n" + " \"x\": [\n" + " \"Car_1\",\n" + " \"Car_2\",\n" + " \"Car_3\"\n" + " ],\n" + " \"y\": [\n" + " 20,\n" + " 14,\n" + " 23\n" + " ],\n" + " \"type\": \"bar\"\n" + " }\n" + " ]\n" + "}");
 			break;
 		case "FamilyChart":
-			String test2 = cjb.buildJSON(getParkhaus(), "pie");
-			System.out.println(test2);
-			out.println(test2);
+			System.out.println(getPieChartView().view());
+			out.println(getPieChartView().view());
 			
 			break;
 		default:
@@ -119,9 +117,9 @@ public class ParkhausServlet extends HttpServlet {
 		case "leave":
 			System.out.println("leave...");
 			// remove Auto 
-			ph = getParkhaus();
-			ph.removeAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
-			setParkhaus(ph);
+			phc = getParkhausController();
+			phc.removeAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
+			setParkhaus(phc.getModel());
 			// return Parkplatz
 			pew = getParkeinweiser();
 			pew.returnParkplatz(Integer.parseInt(requestParam[7]));
@@ -292,6 +290,34 @@ public class ParkhausServlet extends HttpServlet {
 		
 	}
 	
+	private BarChartView getBarChartView() {
+		BarChartView phv;
+		
+		ServletContext application = getApplication();
+		phv = (BarChartView)(application.getAttribute("barchartview"));
+		
+		if(phv == null) {
+			phv = new BarChartView(getParkhaus());
+			application.setAttribute("barchartview", phv);
+		}
+		
+		return phv;
+	}
+	
+	private PieChartView getPieChartView() {
+		PieChartView phv;
+		
+		ServletContext application = getApplication();
+		phv = (PieChartView)(application.getAttribute("piechartview"));
+		
+		if(phv == null) {
+			phv = new PieChartView(getParkhaus());
+			application.setAttribute("piechartview", phv);
+		}
+		
+		return phv;
+	}
+	
 	private ParkhausControllerIF getParkhausController() {
 		ParkhausControllerIF pc;
 		
@@ -304,6 +330,8 @@ public class ParkhausServlet extends HttpServlet {
 			views.add(getSummenView());
 			views.add(getAVGView());
 			views.add(getMinMaxView());
+			views.add(getBarChartView());
+			views.add(getPieChartView());
 			
 			pc = new ParkhausController(getParkhaus(), views);
 			

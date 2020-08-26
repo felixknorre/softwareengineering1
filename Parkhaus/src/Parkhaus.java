@@ -160,4 +160,14 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 		
 	}
 
+	@Override
+	public String getBarChart() {
+		return new BarChartJSONBuilder().build(this.getHistory());
+	}
+
+	@Override
+	public String getPieChart() {
+		return new PieChartJSONBuilder().build(this.getHistory());
+	}
+
 }

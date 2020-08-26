@@ -8,7 +8,7 @@ class ParkhausIFTest {
 	
 	ParkhausIF ph;
 	
-	AutoIF a1, a2;
+	AutoIF a1, a2, a3;
 	
 	@BeforeEach
 	void setUp() {
@@ -16,6 +16,7 @@ class ParkhausIFTest {
 		
 		a1 = new Auto("1", "2323", "_", "_", "dfghidfgh", "#color1", "2", "Frau");
 		a2 = new Auto("2", "345445", "_", "_", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
+		a3 = new Auto("3", "345445", "_", "_", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
 		
 
 	}
@@ -93,6 +94,44 @@ class ParkhausIFTest {
 		
 		String res = "1/2323/_/_/dfghidfgh/#color1/2/Frau/1,2/345445/_/_/dfgdgdssdgdghjkkl/#color2/3/any/2";
 		assertEquals(res, ph.toString());
+	}
+	
+	@Test
+	@DisplayName("Test getBarChat")
+	void test_getBarChat_jsonString() {
+		ph.addAuto(a1);
+		ph.addAuto(a2);
+		ph.addAuto(a3);
+		
+		a1 = new Auto("1", "2323", "20", "200", "dfghidfgh", "#color1", "2", "Frau");
+		a2 = new Auto("2", "345445", "14", "300", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
+		a3 = new Auto("3", "345445", "23", "300", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
+		
+		ph.removeAuto(a1);
+		ph.removeAuto(a2);
+		ph.removeAuto(a3);
+		
+		String expected = "{\"data\":[{\"x\":[\"Car_1\",\"Car_2\",\"Car_3\"],\"y\":[\"20\",\"14\",\"23\"],\"type\":\"bar\"}]}";
+		assertEquals(expected, ph.getBarChart());
+	}
+	
+	@Test
+	@DisplayName("Test getPieChat")
+	void test_getPieChat_jsonString() {
+		ph.addAuto(a1);
+		ph.addAuto(a2);
+		ph.addAuto(a3);
+		
+		a1 = new Auto("1", "2323", "20", "200", "dfghidfgh", "#color1", "2", "Frau");
+		a2 = new Auto("2", "345445", "14", "300", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
+		a3 = new Auto("3", "345445", "23", "300", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
+		
+		ph.removeAuto(a1);
+		ph.removeAuto(a2);
+		ph.removeAuto(a3);
+		
+		String expected = "{\"data\":[{\"labels\":[\"Frau\",\"any\"],\"values\":[1,2],\"type\":\"pie\"}]}";
+		assertEquals(expected, ph.getPieChart());
 	}
 	
 	

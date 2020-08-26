@@ -1,18 +1,15 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ChartJSONBuilderIFTest {
+class ChartJSONBuilderTest {
 	
+	ChartJSONBuilder bar, pie;
 	ParkhausIF ph;
 	AutoIF a1, a2, a3;
-	ChartJSONBuilderIF cjb;
 
-	
 	@BeforeEach
 	void setUp() {
 		ph = new Parkhaus();
@@ -28,22 +25,24 @@ class ChartJSONBuilderIFTest {
 		ph.removeAuto(a1);
 		ph.removeAuto(a2);
 		ph.removeAuto(a3);
-	
-		cjb = new ChartJSONBuilder();		
+		
+		bar = new BarChartJSONBuilder();
+		pie = new PieChartJSONBuilder();
+
 	}
 
 	@Test
-	@DisplayName("Build json for bar chart")
-	void testBuildJSON() throws IOException {
+	@DisplayName("BarChart JSON Test")
+	void test_bar_json_builder() {
 		String expected = "{" + "\"data\":[" + "{" + "\"x\":[" + "\"Car_1\"," + "\"Car_2\"," + "\"Car_3\"" + "]," + "\"y\":[" + "\"20\"," + "\"14\"," + "\"23\"" + "]," + "\"type\":\"bar\"" + "}" + "]" + "}";
-		assertEquals(expected, cjb.buildJSON(ph, "bar"));
+		assertEquals(expected, bar.build(ph.getHistory()));
 	}
 	
 	@Test
-	@DisplayName("Build json for pie chart")
-	void test_builder_jsonPie() throws IOException {
+	@DisplayName("PieChart JSON Test")
+	void test_pie_json_builder() {
 		String expected = "{" + "\"data\":[" + "{" + "\"labels\":[" + "\"any\"," + "\"Family\"" + "]," + "\"values\":[" + "2," + "1" + "]," + "\"type\":\"pie\"" + "}" + "]" + "}";
-		assertEquals(expected, cjb.buildJSON(ph, "pie"));
+		assertEquals(expected, pie.build(ph.getHistory()));
 	}
 
 }

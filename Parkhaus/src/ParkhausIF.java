@@ -10,5 +10,7 @@ public interface ParkhausIF extends ObservableIF{
 	public Double getAVG();
 	public Double getMin();
 	public Double getMax();
+	public String getBarChart();
+	public String getPieChart();
 	public String toString();
 }
