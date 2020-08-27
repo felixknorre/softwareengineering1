@@ -89,6 +89,33 @@ Um Subsysteme zu bilden haben wir zu wenige Klasse.
 
 ## Verzeichnis der eingesetzten Patterns
 
+### Iterator Pattern
+* Iterator<E>
+* ParkhausIterator 
+* Iterable<E> 
+* Parkhaus
+
+### Template Pattern
+* ChartJSONBuilder (Abstrakte Klasse)
+* BarChartJSONBuilder (Konkrete Klasse)
+* PieChartJSONBuilder (Konkrete Klasse)
+
+### Model View Controller (MVC)
+* Model
+    * ParkhausIF
+    * Parkhaus
+* View
+    * AVGView
+    * BarChartView
+    * HistoryTableView
+    * MinMaxView
+    * ParkhausView
+    * PieChartView
+    * SummenView
+* Controller
+    * ParkhausControllerIF
+    * ParkhausController
+    
 ## Zielkonflikte
 
 ## Iterationsbericht
