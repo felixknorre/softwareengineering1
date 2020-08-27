@@ -82,7 +82,7 @@ class ParkhausIFTest {
 		a2 = new Auto("2", "345445", "200", "200", "dfgdgdssdgdghjkkl", "#color2", "3", "any");
 		ph.removeAuto(a1);
 		ph.removeAuto(a2);
-		assertEquals(1.00, ph.getMin(), "min valie");
+		assertEquals(1.00, ph.getMin(), "min value");
 		assertEquals(2.00, ph.getMax(), "max value");
 	}
 	

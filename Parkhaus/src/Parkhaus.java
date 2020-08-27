@@ -9,21 +9,12 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 	private List<AutoIF> history;
 	
 	private List<ObserverIF> obs;
-	
-	private int sum;
-	private int count;
-	private int min, max;
-	
-    
+	 
 	
 	public Parkhaus() {
 		this.parkplatz = new ArrayList<AutoIF>();
 		this.history = new ArrayList<AutoIF>();
 		this.obs = new ArrayList<ObserverIF>();
-		this.count = 0;
-		this.sum = 0;
-		this.max = 0;
-		this.min = 0;
 	}
 
 	@Override
@@ -53,17 +44,6 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 				this.parkplatz.remove(currAuto);
 				// adde Auto to history
 				this.history.add(oldcar);
-				// set max value
-				if(Integer.parseInt(oldcar.getPrice()) > this.max) {
-					this.max = Integer.parseInt(oldcar.getPrice());
-				}
-				// set min value
-				if( Integer.parseInt(oldcar.getPrice()) < this.min) {
-					this.min = Integer.parseInt(oldcar.getPrice());
-				} else if(this.min == 0) {
-					this.min = Integer.parseInt(oldcar.getPrice());
-				}
-				
 			}
 			
 		}
@@ -112,11 +92,22 @@ public class Parkhaus implements ParkhausIF, Iterable<AutoIF>{
 
 	@Override
 	public Double getMin() {
-		return this.min / 100.0;
+		if(this.history.isEmpty()) {
+			return 0.00;
+		} else {
+			Integer min = this.history.stream().map(i -> Integer.parseInt(i.getPrice())).mapToInt(i -> i).min().getAsInt();
+			return (min / 100.00);
+		}
+		
 	}
 	@Override
 	public Double getMax() {
-		return this.max / 100.0;
+		if(this.history.isEmpty()) {
+			return 0.00;
+		} else {
+			Integer max = this.history.stream().map(i -> Integer.parseInt(i.getPrice())).mapToInt(i -> i).max().getAsInt();
+			return (max / 100.00);
+		}
 	}
 	
 	public String toString() {
