@@ -42,6 +42,7 @@ public class ParkhausServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
+		ParkhausCallerIF parkhausCaller;
 		
 		
 		switch (request.getParameter("cmd")) {
@@ -72,6 +73,20 @@ public class ParkhausServlet extends HttpServlet {
 			out.println(getPieChartView().view());
 			
 			break;
+		case "Undo":
+			System.out.println("Undo");
+			parkhausCaller = getParkhausCaller();
+			parkhausCaller.undo();
+			setParkhausCaller(parkhausCaller);
+			out.println("Laden Sie die Seite neu...");
+			break;
+		case "Redo":
+			System.out.println("Redo");
+			parkhausCaller = getParkhausCaller();
+			parkhausCaller.redo();
+			setParkhausCaller(parkhausCaller);
+			out.println("Laden Sie die Seite neu...");
+			break;
 		default:
 			System.out.println("Not defined get command: " + request.getParameter("cmd"));
 			break;
@@ -86,9 +101,10 @@ public class ParkhausServlet extends HttpServlet {
 		
 		// tmp config var
 		ParkhausConfigIF p;
-		ParkhausIF ph;
 		ParkeinweiserIF pew;
 		ParkhausControllerIF phc;
+		ParkhausCallerIF pCaller;
+		CommandIF command;
 		
 		// get request body
 		String body = getBody(request);
@@ -106,7 +122,15 @@ public class ParkhausServlet extends HttpServlet {
 			setParkeinweiser(pew);
 			// park Auto in Parkhaus
 			phc = getParkhausController();
-			phc.addAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], parkplatz, requestParam[8]));
+			
+			// command
+			pCaller = getParkhausCaller();
+			command = new AddAutoCommand(phc, new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], parkplatz, requestParam[8]));
+			pCaller.saveNewCommand(command);
+			pCaller.execute();
+			setParkhausCaller(pCaller);
+			
+			//phc.addAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], parkplatz, requestParam[8]));
 			// safe changed Model in ServletConext
 			setParkhaus(phc.getModel());
 			// respone to client the parkplatz number
@@ -118,7 +142,15 @@ public class ParkhausServlet extends HttpServlet {
 			System.out.println("leave...");
 			// remove Auto 
 			phc = getParkhausController();
-			phc.removeAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
+			
+			// command
+			
+			pCaller = getParkhausCaller();
+			command = new RemoveAutoCommand(phc, new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
+			pCaller.saveNewCommand(command);
+			pCaller.execute();
+			setParkhausCaller(pCaller);
+			//phc.removeAuto(new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
 			setParkhaus(phc.getModel());
 			// return Parkplatz
 			pew = getParkeinweiser();
@@ -338,6 +370,27 @@ public class ParkhausServlet extends HttpServlet {
 		}
 		
 		return pc;
+	}
+	
+	// ParkhausCaller
+	
+	private ParkhausCallerIF getParkhausCaller() {
+		ParkhausCallerIF pc;
+		
+		ServletContext application = getApplication();
+		pc = (ParkhausCallerIF)(application.getAttribute("parkhauscaller"));
+		
+		if(pc == null) {
+			pc = new ParkhausCaller();
+			application.setAttribute("parkhauscaller", pc);
+		}
+		
+		return pc;
+	}
+	
+	private void setParkhausCaller(ParkhausCallerIF pc) {
+		ServletContext application = getApplication();
+		application.setAttribute("parkhauscaller", pc);
 	}
 	
 	

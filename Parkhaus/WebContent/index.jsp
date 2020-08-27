@@ -52,7 +52,7 @@
 		name="P1"
 		server_url="http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Parkhaus"
 		client_categories='["any", "Frau", "Familie"]'
-		extra_buttons='["Summe", "AVG", "Min/Max-Price"]'
+		extra_buttons='["Summe", "AVG", "Min/Max-Price", "Undo", "Redo"]'
 		extra_charts='["Chart", "FamilyChart"]'
 		hide_table
 	></ccm-parkhaus-9-1-3>
