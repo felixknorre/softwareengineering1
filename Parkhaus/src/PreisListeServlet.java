@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class PreisListeServlet
  */
-@WebServlet("/Preisliste")
+@WebServlet("/Rechnungsliste")
 public class PreisListeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -66,14 +66,14 @@ public class PreisListeServlet extends HttpServlet {
 				" 	}" +
 				"	</style>";
 		
-		result += "<h1>Preisliste</h1>";
+		result += "<h1>Rechnungsliste</h1>";
 		result += "<hr>";
 		// dev: http://localhost:8080/Parkhaus/
 		// deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/
 		result += "<div class=\"pagelinks\"> <a href=\"http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/\">Parkhaus</a> \n";
 		// dev: http://localhost:8080/Parkhaus/Preisliste
-		// deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Preisliste
-		result += "<a href=\"http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Preisliste\">Preisliste</a> </div>\n";
+		// deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Rechnungsliste
+		result += "<a href=\"http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Rechnungsliste\">Rechnungsliste</a> </div>\n";
 		result += "<hr>";
 		
 		// get ServletContext

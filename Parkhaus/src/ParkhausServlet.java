@@ -43,6 +43,7 @@ public class ParkhausServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		ParkhausCallerIF parkhausCaller;
+		PreisberechnerIF pb;
 		
 		
 		switch (request.getParameter("cmd")) {
@@ -87,6 +88,18 @@ public class ParkhausServlet extends HttpServlet {
 			setParkhausCaller(parkhausCaller);
 			out.println("Laden Sie die Seite neu...");
 			break;
+		case "Abo":
+			System.out.println("Abo...");
+			pb = getPreisberechner();
+			pb.createSubscription();
+			setPreisberechner(pb);
+			out.println("Abo abschliessen...");
+			break;
+		case "Parkhauspreise":
+			System.out.println("Preise...");
+			pb = getPreisberechner();
+			out.println(pb.toString());
+			break;
 		default:
 			System.out.println("Not defined get command: " + request.getParameter("cmd"));
 			break;
@@ -105,6 +118,8 @@ public class ParkhausServlet extends HttpServlet {
 		ParkhausControllerIF phc;
 		ParkhausCallerIF pCaller;
 		CommandIF command;
+		PreisberechnerIF pb;
+		
 		
 		// get request body
 		String body = getBody(request);
@@ -116,12 +131,18 @@ public class ParkhausServlet extends HttpServlet {
 		switch (requestParam[0]) {
 		case "enter":
 			//System.out.println("enter...");
+			
 			// get Parkplatz
 			pew = getParkeinweiser();
 			String parkplatz = "" + pew.getParkplatz();
 			setParkeinweiser(pew);
 			// park Auto in Parkhaus
 			phc = getParkhausController();
+			
+			// create abo
+			pb = getPreisberechner();
+			pb.subscription(requestParam[1]);
+			setPreisberechner(pb);
 			
 			// command
 			pCaller = getParkhausCaller();
@@ -141,12 +162,17 @@ public class ParkhausServlet extends HttpServlet {
 		case "leave":
 			System.out.println("leave...");
 			// remove Auto 
+			
+			// calc price
+			pb = getPreisberechner();
+			String price = pb.calculatedPrice(requestParam[8], requestParam[3], requestParam[1]);
+			
+			// get controller
 			phc = getParkhausController();
 			
 			// command
-			
 			pCaller = getParkhausCaller();
-			command = new RemoveAutoCommand(phc, new Auto(requestParam[1], requestParam[2], requestParam[3], requestParam[4], requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
+			command = new RemoveAutoCommand(phc, new Auto(requestParam[1], requestParam[2], requestParam[3], price, requestParam[5], requestParam[6], requestParam[7], requestParam[8]));
 			pCaller.saveNewCommand(command);
 			pCaller.execute();
 			setParkhausCaller(pCaller);
@@ -391,6 +417,25 @@ public class ParkhausServlet extends HttpServlet {
 	private void setParkhausCaller(ParkhausCallerIF pc) {
 		ServletContext application = getApplication();
 		application.setAttribute("parkhauscaller", pc);
+	}
+	
+	private PreisberechnerIF getPreisberechner() {
+		PreisberechnerIF pb;
+			
+		ServletContext application = getApplication();
+		pb = (PreisberechnerIF)(application.getAttribute("preisberechner"));
+			
+		if(pb == null) {
+			pb = new Preisberechner(2, 1, 1);
+			application.setAttribute("preisberechner", pb);
+		}
+			
+		return pb;
+	}
+	
+	private void setPreisberechner(PreisberechnerIF pb) {
+		ServletContext application = getApplication();
+		application.setAttribute("preisberechner", pb);
 	}
 	
 	

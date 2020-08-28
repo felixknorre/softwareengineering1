@@ -8,35 +8,37 @@ public class ParkhausCaller implements ParkhausCallerIF{
 	
 	public ParkhausCaller() {
 		this.commands = new ArrayList<CommandIF>();
-		this.pointer = 0;
+		this.pointer = -1;
 	}
 	
 	@Override
 	public void saveNewCommand(CommandIF c) {
+		this.pointer++;
 		this.commands.add(this.pointer, c);
 	}
 
 	@Override
 	public void execute() {
-		if(this.pointer < this.commands.size()) {
+		if((this.pointer < this.commands.size()) || !this.commands.isEmpty()) {
 			this.commands.get(this.pointer).execute();
-			this.pointer++;
 		}
 		
 	}
 
 	@Override
 	public void undo() {
-		if(--this.pointer  >= 0 ) {
+		if(this.pointer  >= 0 ) {
 			this.commands.get(this.pointer).undo();
+			this.pointer--;
 		}
 		
 	}
 
 	@Override
 	public void redo() {
-		if(this.pointer < this.commands.size()) {
-			this.commands.get(this.pointer++).execute();
+		if((this.pointer + 1) < this.commands.size()) {
+			this.pointer++;
+			this.commands.get(this.pointer).execute();
 		}
 		
 	}
