@@ -92,7 +92,7 @@ Um Subsysteme zu bilden haben wir zu wenige Klasse.
 
 ### Iterator Pattern
 
-![Klassendiagramm Iterator](./images/uml/classdiagramm_iteratoR.png)
+![Klassendiagramm Iterator](./images/uml/classdiagramm_iterator.png)
 
 **Autor:** Felix Knorre
 
