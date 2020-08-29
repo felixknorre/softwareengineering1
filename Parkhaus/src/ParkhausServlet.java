@@ -134,7 +134,7 @@ public class ParkhausServlet extends HttpServlet {
 			
 			// get Parkplatz
 			pew = getParkeinweiser();
-			String parkplatz = "" + pew.getParkplatz();
+			String parkplatz = "" + pew.getParkplatz(requestParam[8]);
 			setParkeinweiser(pew);
 			// park Auto in Parkhaus
 			phc = getParkhausController();
@@ -231,7 +231,7 @@ public class ParkhausServlet extends HttpServlet {
 		
 		if(p == null) {
 			// erzeuge neue Config
-			p = new ParkhausConfig("10", "5", "23", "100", "10");
+			p = new ParkhausConfig("20", "5", "23", "100", "10");
 			// speichere config in servlet context
 			application.setAttribute("config", p);
 		}

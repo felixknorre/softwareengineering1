@@ -32,7 +32,7 @@
  	}
 	
 	</style>
-<script src='https://ccmjs.github.io/mkaul-components/parkhaus/versions/ccm.parkhaus-9.1.3.js'></script>
+<script src='https://ccmjs.github.io/mkaul-components/parkhaus/versions/ccm.parkhaus-9.1.7.js'></script>
 </head>
 <body>
 	<h1>Parkhaus</h1>
@@ -48,13 +48,14 @@
 	<hr>
 	<!-- dev:  http://localhost:8080/Parkhaus/Parkhaus-->
 	<!-- deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Parkhaus -->
-	<ccm-parkhaus-9-1-3
+	<ccm-parkhaus-9-1-7
 		name="P1"
 		server_url="http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Parkhaus"
 		client_categories='["any", "Frau", "Familie"]'
 		extra_buttons='["Abo", "Undo", "Redo", "Parkhauspreise", "Summe", "AVG", "Min/Max-Price"]'
 		extra_charts='["Chart", "FamilyChart"]'
+		max='20'
 		hide_table
-	></ccm-parkhaus-9-1-3>
+	></ccm-parkhaus-9-1-7>
 </body>
 </html>

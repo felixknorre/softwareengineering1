@@ -10,60 +10,53 @@ class ParkeinweiserIFTest {
 	
 	@BeforeEach
 	void setUp() {
-		pew = new Parkeinweiser(4);
+		pew = new Parkeinweiser(15);
 		
 	}
 
 	@Test
 	@DisplayName("Teste Parkplatzabfrage")
 	void testGetParkplatz() {
-		assertEquals(1, pew.getParkplatz());
-		assertEquals(2, pew.getParkplatz());
-		pew.returnParkplatz(2);
-		assertEquals(3, pew.getParkplatz());
-		assertEquals(4, pew.getParkplatz());
-		assertEquals(2, pew.getParkplatz());
+		assertEquals(11, pew.getParkplatz("any"));
+		assertEquals(12, pew.getParkplatz("any"));
+		pew.returnParkplatz(11);
+		assertEquals(13, pew.getParkplatz("any"));
+		assertEquals(14, pew.getParkplatz("any"));
+		assertEquals(15, pew.getParkplatz("any"));
+		assertEquals(11, pew.getParkplatz("any"));
 	}
 	
 	@Test
 	@DisplayName("Vergrößere Parkplatzgröße")
 	void test_changeSize_bigger() {
-		pew.changeSize(6);
+		pew.changeSize(20);
 		
-		for(int i = 1; i < 7; i++) {
-			assertEquals(i, pew.getParkplatz());
+		for(int i = 11; i < 21; i++) {
+			assertEquals(i, pew.getParkplatz("any"));
 		}
 	}
 	
 	@Test
 	@DisplayName("Verkleinere Parkplatzgröße")
 	void test_changeSize_smaller() {
-		pew.changeSize(2);
 		
-		assertEquals(2, pew.getSize());
+		pew.changeSize(13);
+	
 		
-		for(int i = 1; i < 3; i++) {
-			assertEquals(i, pew.getParkplatz());
+		for(int i = 11; i < 14; i++) {
+			assertEquals(i, pew.getParkplatz("any"));
 		}
+		assertEquals(-1, pew.getParkplatz("any"));
 	}
 	
 	@Test
-	@DisplayName("Ändere Größe mehrfach Parkplatzgröße")
+	@DisplayName("Teste spizielle Parkplätze")
 	void test_changeSize_change() {
-		// no free parkinglots
-		pew.getParkplatz();
-		pew.getParkplatz();
-		pew.getParkplatz();
-		pew.getParkplatz();
-		
-		// change to a smaller size
-		pew.changeSize(3);
-		pew.returnParkplatz(4);
-		assertEquals(-1, pew.getParkplatz());
-		
-		pew.changeSize(6);
-		assertEquals(4, pew.getParkplatz());
-		
+
+		assertEquals(1, pew.getParkplatz("Frau"));
+		assertEquals(2, pew.getParkplatz("Familie"));
+		assertEquals(11, pew.getParkplatz("any"));
+		assertEquals(3, pew.getParkplatz("Familie"));
 		
 		
 	}
