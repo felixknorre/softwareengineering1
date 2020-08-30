@@ -50,15 +50,35 @@ class ParkeinweiserIFTest {
 	}
 	
 	@Test
-	@DisplayName("Teste spizielle Parkplätze")
+	@DisplayName("Teste spezieller Parkplätze")
 	void test_changeSize_change() {
 
 		assertEquals(1, pew.getParkplatz("Frau"));
 		assertEquals(2, pew.getParkplatz("Familie"));
 		assertEquals(11, pew.getParkplatz("any"));
 		assertEquals(3, pew.getParkplatz("Familie"));
+	}
+	
+	@Test
+	@DisplayName("Kein spezieller Parkplatz")
+	void test_no_special_parkinglot() {
+		for(int i = 0; i < 10; i++) {
+			pew.getParkplatz("Frau");
+		}
+		assertEquals(11, pew.getParkplatz("Frau"));
 		
-		
+	}
+	
+	@Test
+	@DisplayName("Parkhaus voll")
+	void test_no_parkinglots() {
+		for(int i = 0; i < 10; i++) {
+			pew.getParkplatz("Frau");
+		}
+		for(int i = 0; i < 10; i++) {
+			pew.getParkplatz("any");
+		}
+		assertEquals(-1, pew.getParkplatz("Familie"));
 	}
 
 }

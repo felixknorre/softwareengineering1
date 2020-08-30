@@ -16,9 +16,9 @@ class PreisberechnerIFTest {
 	@Test
 	@DisplayName("Berechne Preise")
 	void testCalculatedPrice() {
-		assertEquals("150", pb.calculatedPrice("any", "10", "10"));
-		assertEquals("100", pb.calculatedPrice("Frau", "10", "10"));
-		assertEquals("100", pb.calculatedPrice("Familie", "10", "10"));
+		assertEquals("150.0", pb.calculatedPrice("any", "10000", "10"));
+		assertEquals("100.0", pb.calculatedPrice("Frau", "10000", "10"));
+		assertEquals("100.0", pb.calculatedPrice("Familie", "10000", "10"));
 	}
 
 
@@ -27,15 +27,21 @@ class PreisberechnerIFTest {
 	void test_create_Subscription_success() {
 		pb.createSubscription();
 		pb.subscription("3");
-		assertEquals("1500", pb.calculatedPrice("any", "100", "5")); // 15 * 100
-		assertEquals("0", pb.calculatedPrice("any", "100", "3")); // 0
+		assertEquals("150.0", pb.calculatedPrice("any", "10000", "5")); // 15 * 100
+		assertEquals("0.0", pb.calculatedPrice("any", "10000", "3")); // 0
 	}
 	
 	@Test
 	@DisplayName("Schließe nicht erfolgreich Abo ab")
 	void test_create_Subscription_fail() {
 		pb.subscription("3");
-		assertEquals("1500", pb.calculatedPrice("any", "100", "3")); // 0
+		assertEquals("150.0", pb.calculatedPrice("any", "10000", "3")); // 0
+	}
+	
+	@Test
+	@DisplayName("Teste Preisauflistung")
+	void test_toString() {
+		assertEquals("Frauen: 10 Euro, Familie: 10 Euro, Andere: 15 Euro (pro Sekunde)", pb.toString());
 	}
 
 }

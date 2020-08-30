@@ -26,7 +26,7 @@ public class Preisberechner implements PreisberechnerIF{
 	public String calculatedPrice(String type, String d, String nr) {
 		// parse duration
 		int duration = Integer.parseInt(d);
-		int price = 0;
+		double price = 0.00;
 		
 		if(!this.abos.contains(nr)) {
 			switch (type) {
