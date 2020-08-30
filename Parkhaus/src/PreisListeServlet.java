@@ -71,7 +71,7 @@ public class PreisListeServlet extends HttpServlet {
 		// dev: http://localhost:8080/Parkhaus/
 		// deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/
 		result += "<div class=\"pagelinks\"> <a href=\"http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/\">Parkhaus</a> \n";
-		// dev: http://localhost:8080/Parkhaus/Preisliste
+		// dev: http://localhost:8080/Parkhaus/Rechnungsliste
 		// deploy: http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Rechnungsliste
 		result += "<a href=\"http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/Rechnungsliste\">Rechnungsliste</a> </div>\n";
 		result += "<hr>";
@@ -108,49 +108,7 @@ public class PreisListeServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	// -------------------------------------------------
-	// -- Help-Mothodes Servlet Context & HTML Table
-	// -------------------------------------------------
 	
-	private String createHTMLTable() {
-		String htmlString = "<table style=\"width:100%\"> ";
-		
-		ServletContext application = getServletConfig().getServletContext();
-		
-		ParkhausIF ph;
-		ph = (ParkhausIF)(application.getAttribute("parkhaus"));
-		if(ph == null) {
-			ph = new Parkhaus();
-		}
-		
-		
-		
-		if(ph.getHistory().isEmpty()) {
-			htmlString += "<p class=\"info\">Bis jetzt hat kein Kunde bezahlt...</p>";
-		} else {
-			htmlString += "<tr> <th>Nr.</th> <th>Kategorie</th> <th>Dauer</th> <th>Preis</th> </tr>";
-			for(AutoIF a : ph.getHistory()) {
-				htmlString += "<tr> <td>" + a.getNr() + "</td>" + "<td>" + a.getCategory() + "</td>" + "<td>" + convertToTimeFormat(a.getDuration()) + "</td>" + "<td>" + (Double.parseDouble(a.getPrice()) / 100) + "</td> </tr>";
-			}
-			htmlString += "</table>";
-		}
-		
-		
-		return htmlString;
-		
-	}
-	
-	private String convertToTimeFormat(String ms) {
-		long seconds = Long.parseLong(ms) / 1000;
-		
-		int hours = (int)seconds / 3600;
-		seconds = (int)seconds % 3600;
-		int minutes = (int)seconds / 60;
-		seconds = seconds % 60;
-		
-		return "Stunden: " + hours + ", Minuten: " + minutes + ", Sekunden: " + seconds;
-	}
-		
 	
 
 
