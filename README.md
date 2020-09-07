@@ -294,6 +294,7 @@ Was wurde in den vier Iterationen geleistet? Welche User Stories (Slice aus der 
         * US11: Als Person mit Behinderung benötige ich breite Parkplätze, um einfacher aussteigen zu können.
     * Tasks
         * neue Parkhaus Komponenten Version importieren
+        * ersetze DemoServelt durch ParkhausServlet
         * Tabelle der Parkhaus Komponenten ausblenden und eigene Tabelle anlegen
         * MVC: neue Views hinzufügen
         * UNDO/REDO-Funktion im Servlet integrieren
@@ -329,7 +330,7 @@ Wie viel Zeit (in Personentagen (PT)) ist in welche Arbeit, in welche Teilschrit
 
 ### Was lief schlecht? Was würde man anders machen, wenn man noch einmal neu anfangen könnte? Also was hat man daraus gelernt und was würde man im nächsten Projekt besser machen? 
 
-* Das Team bestand anfangs aus drei Personen und wir haben auch Produkt Vision, MVP, die UML Diagramme, etc. (siehe Liste mit Eigenleistungen) zusammen erarbeitet. Doch das Semester Projekt wurde ausschließlich von mir(Felix Knorre) alleine implementiert. Man muss an dieser Stelle sagen, dass hier keine einzelne Person daran Schuld ist. Wir haben darüber gesprochen, um herauszufinden, was schiefgelaufen ist, wie es zu dieser Situation kam und wir stellten fest, dass wir alle unterschiedliche Voraussetzungen zum Beginn des Projektes mitbrachten. Wir hatten dann die Wahl das Team aufzulösen oder die anderen Teammitglieder versuchen aufzuholen und ich stelle meine Commits ein. Wir haben uns im Guten dazu entschlossen das Team aufzulösen, da das Projekt zu dem Zeitpunkt schon weit fortgeschritten war und so jedes Teammitglied die Möglichkeit hat mit seinem eigenem Projekt zu zeigen was er in diesem Semester über Software Engineering gelernt hat. Wir haben daraus gelernt und wenn wir das Projekt noch einmal neu anfangen könnten, würden wir dafür sorgen, dass wir nicht noch einmal die diese Situation kommt, jeder 1/3 des Codes schreibt, um so die Softwareentwicklung im Team zu üben.
+* Das Team bestand anfangs aus drei Personen und wir haben auch Produkt Vision, MVP, die UML Diagramme, etc. (siehe Liste mit Eigenleistungen) zusammen erarbeitet. Doch das Semester Projekt wurde größtenteils von mir(Felix Knorre) alleine implementiert. Man muss an dieser Stelle sagen, dass hier keine einzelne Person daran Schuld ist. Wir haben darüber gesprochen, um herauszufinden, was schiefgelaufen ist, wie es zu dieser Situation kam und wir stellten fest, dass wir alle unterschiedliche Voraussetzungen zum Beginn des Projektes mitbrachten. Wir hatten dann die Wahl das Team aufzulösen oder die anderen Teammitglieder versuchen aufzuholen und ich stelle meine Commits ein. Wir haben uns im Guten dazu entschlossen das Team aufzulösen, da das Projekt zu dem Zeitpunkt schon weit fortgeschritten war und so jedes Teammitglied die Möglichkeit hat mit seinem eigenem Projekt zu zeigen was er in diesem Semester über Software Engineering gelernt hat. Wir haben daraus gelernt und wenn wir das Projekt noch einmal neu anfangen könnten, würden wir dafür sorgen, dass wir nicht noch einmal die diese Situation kommt, jeder 1/3 des Codes schreibt, um so die Softwareentwicklung im Team zu üben.
 
 
 
