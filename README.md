@@ -337,8 +337,8 @@ Wie viel Zeit (in Personentagen (PT)) ist in welche Arbeit, in welche Teilschrit
 **Autorenschaft:** Felix Knorre
 
 ## Präsentation und Demo des Projekts
-[Präsentation](https://www.google.de)\
-[Demo Video](https://www.google.de)\
+[Präsentation](https://www.youtube.com/watch?v=pXdtmWfwQDU)\
+[Demo Video](https://www.youtube.com/watch?v=OoBY3o6kzUk)\
 [Live Demo](http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/)
 
 **Autorenschaft:** Felix Knorre
