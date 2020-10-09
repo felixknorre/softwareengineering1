@@ -1,49 +1,41 @@
-# SS20 TEAM 3
-## Felix Knorre, MatrNr: 9030916
----
+# Software Engineering 1 SS20 
 
-- [Digitalisierungskonzept](#digitalisierungskonzept)
-- [User Stories](#user-stories)
-- [Kanban-Board](#kanban-board)
-  * [Sprint 1](#sprint-1)
-  * [Sprint 2](#sprint-2)
-  * [Sprint 3](#sprint-3)
-  * [Sprint 4](#sprint-4)
-  * [Sprint 5](#sprint-5)
-- [Priorisierung der User Stories](#priorisierung-der-user-stories)
-- [Minimum Viable Product (MVP)](#minimum-viable-product--mvp-)
-- [UML Use Case-Diagramm](#uml-use-case-diagramm)
-- [Robustheitsdiagramm](#robustheitsdiagramm)
-- [UML Klassendiagramme](#uml-klassendiagramme)
-  * [Anforderungskatalog nach Balzert](#anforderungskatalog-nach-balzert)
-  * [Iterator Pattern](#iterator-pattern)
-  * [Template Pattern](#template-pattern)
-  * [Command Pattern](#command-pattern)
-- [UML Sequenzdiagramme](#uml-sequenzdiagramme)
-  * [Use Case: Statistiken einsehen](#use-case--statistiken-einsehen)
-  * [Model View Controller (MVC)](#model-view-controller--mvc-)
-- [UML Aktivitätsdiagramme](#uml-aktivit-tsdiagramme)
-- [UML Verteilungsdiagramm](#uml-verteilungsdiagramm)
-- [Verzeichnis der eingesetzten Patterns](#verzeichnis-der-eingesetzten-patterns)
-  * [Iterator Pattern](#iterator-pattern-1)
-  * [Template Pattern](#template-pattern-1)
-  * [Model View Controller (MVC)](#model-view-controller--mvc--1)
-  * [Command Pattern](#command-pattern-1)
-- [Zielkonflikte](#zielkonflikte)
-- [Iterationsbericht](#iterationsbericht)
-  * [Iteration 1 (Woche 3-4)](#iteration-1--woche-3-4-)
-  * [Iteration 2 (Woche 5-6)](#iteration-2--woche-5-6-)
-  * [Iteration 3 (Woche 7-8)](#iteration-3--woche-7-8-)
-  * [Iteration 4 (Woche 9-10)](#iteration-4--woche-9-10-)
-  * [Iteration 5 (zwei Wochen in vorlesungsfreier Zeit)](#iteration-5--zwei-wochen-in-vorlesungsfreier-zeit-)
-- [Summarisches Projektprotokoll](#summarisches-projektprotokoll)
-  * [PT von Felix Knorre, 9030916:](#pt-von-felix-knorre--9030916-)
-- [Resumée und Fazit](#resum-e-und-fazit)
-  * [Was lief gut? Was hat sich bewährt? Was waren Erfolgsrezepte?](#was-lief-gut--was-hat-sich-bew-hrt--was-waren-erfolgsrezepte-)
-  * [Was lief schlecht? Was würde man anders machen, wenn man noch einmal neu anfangen könnte? Also was hat man daraus gelernt und was würde man im nächsten Projekt besser machen?](#was-lief-schlecht--was-w-rde-man-anders-machen--wenn-man-noch-einmal-neu-anfangen-k-nnte--also-was-hat-man-daraus-gelernt-und-was-w-rde-man-im-n-chsten-projekt-besser-machen-)
-- [Präsentation und Demo des Projekts](#pr-sentation-und-demo-des-projekts)
+- [Software Engineering 1 SS20](#software-engineering-1-ss20)
+  * [Digitalisierungskonzept](#digitalisierungskonzept)
+  * [User Stories](#user-stories)
+  * [Kanban-Board](#kanban-board)
+    + [Sprint 1](#sprint-1)
+    + [Sprint 2](#sprint-2)
+    + [Sprint 3](#sprint-3)
+    + [Sprint 4](#sprint-4)
+    + [Sprint 5](#sprint-5)
+  * [Priorisierung der User Stories](#priorisierung-der-user-stories)
+  * [Minimum Viable Product (MVP)](#minimum-viable-product--mvp-)
+  * [UML Use Case-Diagramm](#uml-use-case-diagramm)
+  * [Robustheitsdiagramm](#robustheitsdiagramm)
+  * [UML Klassendiagramme](#uml-klassendiagramme)
+    + [Anforderungskatalog nach Balzert](#anforderungskatalog-nach-balzert)
+    + [Iterator Pattern](#iterator-pattern)
+    + [Template Pattern](#template-pattern)
+    + [Command Pattern](#command-pattern)
+  * [UML Sequenzdiagramme](#uml-sequenzdiagramme)
+    + [Use Case: Statistiken einsehen](#use-case--statistiken-einsehen)
+    + [Model View Controller (MVC)](#model-view-controller--mvc-)
+  * [UML Aktivitätsdiagramme](#uml-aktivit-tsdiagramme)
+  * [Verzeichnis der eingesetzten Patterns](#verzeichnis-der-eingesetzten-patterns)
+    + [Iterator Pattern](#iterator-pattern-1)
+    + [Template Pattern](#template-pattern-1)
+    + [Model View Controller (MVC)](#model-view-controller--mvc--1)
+    + [Command Pattern](#command-pattern-1)
+  * [Iterationsbericht](#iterationsbericht)
+    + [Iteration 1 (Woche 3-4)](#iteration-1--woche-3-4-)
+    + [Iteration 2 (Woche 5-6)](#iteration-2--woche-5-6-)
+    + [Iteration 3 (Woche 7-8)](#iteration-3--woche-7-8-)
+    + [Iteration 4 (Woche 9-10)](#iteration-4--woche-9-10-)
+    + [Iteration 5 (zwei Wochen in vorlesungsfreier Zeit)](#iteration-5--zwei-wochen-in-vorlesungsfreier-zeit-)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 ## Digitalisierungskonzept
 ---
@@ -192,11 +184,6 @@ Um Subsysteme zu bilden haben wir zu wenige Klasse.
 
 **Autorenschaft:** Kai Klemmer, Tobias Krieger, Felix Knorre
 
-## UML Verteilungsdiagramm
-
-![Verteilungsdiagramm](./images/uml/deployment.png)
-
-**Autorenschaft:** Felix Knorre
 
 ## Verzeichnis der eingesetzten Patterns
 
@@ -236,14 +223,6 @@ Um Subsysteme zu bilden haben wir zu wenige Klasse.
 
 **Autorenschaft:** Felix Knorre
     
-## Zielkonflikte
-
-Haben Sie Zielkonflikte erkennen können? Wie haben Sie diese aufgelöst?
-
-Während des Semesterprojektes sind keine Zielkonfilikte ausgetreten.
-
-**Autorenschaft:** Felix Knorre
-
 ## Iterationsbericht
 
 Was wurde in den vier Iterationen geleistet? Welche User Stories (Slice aus der Story Map) wurden in welcher Iteration jeweils umgesetzt? Was waren die Zwischenergebnisse? (Iterationsbericht z.B. mittels Screenshots des Kanban-Boards)
@@ -304,41 +283,6 @@ Was wurde in den vier Iterationen geleistet? Welche User Stories (Slice aus der 
 
 **Autorenschaft:** Felix Knorre
 
-## Summarisches Projektprotokoll
-
-Wie viel Zeit (in Personentagen (PT)) ist in welche Arbeit, in welche Teilschritte, in welche Zwischenergebnisse hinein geflossen?
-
-### PT von Felix Knorre, 9030916:
-
-| Iteration | Zeit(PT) | 
-|-----------|----------|
-| 1         | 4        |
-| 2         | 4        |
-| 3         | 5        |
-| 4         | 4        |
-| 5         | 6        |
-
-**Autorenschaft:** Felix Knorre
-
-## Resumée und Fazit
-
-### Was lief gut? Was hat sich bewährt? Was waren Erfolgsrezepte?
-
-* Die Aufteilung der User Stories und der Task auf die Srum Sprint hat sehr gut funktioniert. Ein Scrum Sprint dauerte zwei Wochen, was zeitlich gut passte und sich die User Stories und Task in der Zeit auch abarbeiten ließen. 
-
-* Der Test-Driven-Development Ansatz hat sich bewährt. Das Schreiben von Tests hat zwar im Vor­hi­n­ein mehr Zeit gekostet, aber man hat sich bevor man den eigentlichen Code schreibt gedanken gemacht was man überhaupt brauch und wenn man in einem nachfolgendem Srum Sprint etwas anpassen musste, könnte man so gewährleisten das der Code noch das gewollte Ergebnis liefer
-
-### Was lief schlecht? Was würde man anders machen, wenn man noch einmal neu anfangen könnte? Also was hat man daraus gelernt und was würde man im nächsten Projekt besser machen? 
-
-* Das Team bestand anfangs aus drei Personen und wir haben auch Produkt Vision, MVP, die UML Diagramme, etc. (siehe Liste mit Eigenleistungen) zusammen erarbeitet. Doch das Semester Projekt wurde größtenteils von mir(Felix Knorre) alleine implementiert. Man muss an dieser Stelle sagen, dass hier keine einzelne Person daran Schuld ist. Wir haben darüber gesprochen, um herauszufinden, was schiefgelaufen ist, wie es zu dieser Situation kam und wir stellten fest, dass wir alle unterschiedliche Voraussetzungen zum Beginn des Projektes mitbrachten. Wir hatten dann die Wahl das Team aufzulösen oder die anderen Teammitglieder versuchen aufzuholen und ich stelle meine Commits ein. Wir haben uns im Guten dazu entschlossen das Team aufzulösen, da das Projekt zu dem Zeitpunkt schon weit fortgeschritten war und so jedes Teammitglied die Möglichkeit hat mit seinem eigenem Projekt zu zeigen was er in diesem Semester über Software Engineering gelernt hat. Wir haben daraus gelernt und wenn wir das Projekt noch einmal neu anfangen könnten, würden wir dafür sorgen, dass wir nicht noch einmal die diese Situation kommt, jeder 1/3 des Codes schreibt, um so die Softwareentwicklung im Team zu üben.
 
 
 
-**Autorenschaft:** Felix Knorre
-
-## Präsentation und Demo des Projekts
-[Präsentation](https://www.youtube.com/watch?v=pXdtmWfwQDU)\
-[Demo Video](https://www.youtube.com/watch?v=OoBY3o6kzUk)\
-[Live Demo](http://sepp-test.inf.h-brs.de:8080/mk_se1_ss20_team3/)
-
-**Autorenschaft:** Felix Knorre
